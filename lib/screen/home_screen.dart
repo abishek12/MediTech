@@ -88,6 +88,29 @@ class HomeScreen extends StatelessWidget {
                     Column(
                       children: [
                         GestureDetector(
+                          onTap: ()=> Navigator.pushNamed(context, "/vaccine"),
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40.0),
+                            ),
+                            child: Image.asset("assets/icons/vaccine.png"),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "Vaccine",
+                          style: MyStyles.paragraph,
+                        ),
+                      ],
+                    ),
+                    // second item
+                    Column(
+                      children: [
+                        GestureDetector(
                           onTap: () => Navigator.pushNamed(context, "/doctor"),
                           child: Container(
                             padding: EdgeInsets.all(8.0),
@@ -107,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // second item
+                    // third item
                     Column(
                       children: [
                         GestureDetector(
@@ -130,7 +153,16 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // third item
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.0),
+              // second row for items
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // fourth item
                     Column(
                       children: [
                         GestureDetector(
@@ -149,35 +181,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Text(
                           "Beds",
-                          style: MyStyles.paragraph,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16.0),
-              // second row for items
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // fourth item
-                    Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40.0),
-                          ),
-                          child: Image.asset("assets/icons/prescription.png"),
-                        ),
-                        SizedBox(
-                          height: 6.0,
-                        ),
-                        Text(
-                          "E-prescription",
                           style: MyStyles.paragraph,
                         ),
                       ],

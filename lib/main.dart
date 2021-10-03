@@ -14,6 +14,7 @@ import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/screen/register_patient.dart';
 import 'package:medicalapp/screen/register_screen.dart';
 import 'package:medicalapp/screen/settings.dart';
+import 'package:medicalapp/screen/vaccine.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.landingScreen: (context) => LandingScreen(),
           MyRoutes.loginScreen: (context) => LoginScreen(),
           MyRoutes.registerScreen: (context) => RegisterScreen(),
-          MyRoutes.registerPatietScreen: (context) => RegisterPatientScreen(),
+          MyRoutes.registerPatientScreen: (context) => RegisterPatientScreen(),
           MyRoutes.homeScreen: (context) => HomeScreen(),
           MyRoutes.chatScreen: (context) => ChatScreen(),
           MyRoutes.doctorScreen: (context) => DoctorScreen(),
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.labScreen: (context) => LabScreen(),
           MyRoutes.settingsScreen: (context) => SettingsScreen(),
           MyRoutes.labPaymentScreen: (context) => LabPaymentScreen(),
+          MyRoutes.vaccineScreen: (context) => VaccineScreen(),
         });
   }
 }
