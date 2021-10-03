@@ -2,7 +2,7 @@ class MyRoutes {
   static String landingScreen = "/landing";
   static String loginScreen = "/login";
   static String registerScreen = "/registerDoctor";
-  static String registerPatientScreen = "/registerPatient";
+  static String registerPatietScreen = "/registerPatient";
   static String homeScreen = "/home";
   static String chatScreen = "/chat";
   static String doctorScreen = "/doctor";
@@ -12,8 +12,4 @@ class MyRoutes {
   static String labScreen = "/lab";
   static String settingsScreen = "/settings";
   static String labPaymentScreen = "/labPayment";
-  static String vaccineScreen = "/vaccine";
-  static String hospitalScreen = "/hospital";
-  static String bookHospitalScreen = "/bookHospital";
-  static String appointmentScreen = "/appointment";
 }
