@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,9 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String _email = "";
     String _password = "";
+    String _fullName = "";
+    String _licensesNumber = "";
+    String _registeredDate = "";
 
     void _dialogBox(String content) {
       showDialog(
@@ -31,7 +35,18 @@ class RegisterScreen extends StatelessWidget {
     Future<void> _registerDoctor() async {
       try {
         await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: _email, password: _password);
+            .createUserWithEmailAndPassword(email: _email, password: _password)
+            .then((value) => FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(value.user!.uid)
+                    .set({
+                  "fullName": _fullName,
+                  "email": _email,
+                  "password": _password,
+                  "role": "doctor",
+                  "licensesNumber": _licensesNumber,
+                  "registeredDate": _registeredDate,
+                }));
         Navigator.pushNamed(context, "/login");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -45,15 +60,33 @@ class RegisterScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: ListView(
           children: [
-            Text("Register as a Doctor"),
+            SizedBox(
+              height: 48.0,
+            ),
+            Center(
+              child: Text("Register as a Doctor"),
+            ),
+            SizedBox(
+              height: 32.0,
+            ),
             Container(
               margin: EdgeInsets.all(16.0),
               child: Column(
                 children: [
+                  CustomTextField(
+                    helperText: "Full Name",
+                    hintText: 'Enter full name',
+                    obscureText: false,
+                    onChanged: (value) {
+                      _fullName = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   CustomTextField(
                     helperText: "Email",
                     hintText: 'Enter email address',
@@ -76,12 +109,40 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(
                     height: 16.0,
                   ),
+                  CustomTextField(
+                    helperText: "Licenses number",
+                    hintText: 'Enter doctor licenses number',
+                    obscureText: false,
+                    onChanged: (value) {
+                      _licensesNumber = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 16.0,
+                  ),
+                  CustomTextField(
+                    helperText: "Registered Date",
+                    hintText: '2021-12-25',
+                    obscureText: false,
+                    onChanged: (value) {
+                      _registeredDate = value;
+                    },
+                  ),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () => _registerDoctor(),
-                      child: Text("Login"),
+                    child: RaisedButton(
+                      onPressed: (){
+                        _registerDoctor();
+
+                      },
+                      child: Text("Register"),
                     ),
+                  ),
+                  SizedBox(
+                    height: 16.0,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
