@@ -7,12 +7,13 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userData = FirebaseAuth.instance.currentUser!.uid;
     return Drawer(
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
             accountName: Text("Abishek Khanal"),
-            accountEmail: Text("abishek@gmail.com"),
+            accountEmail: Text(FirebaseAuth.instance.currentUser!.email.toString()),
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage("assets/images/doctor1.jpg"),
             ),

@@ -36,9 +36,9 @@ class _LandingScreenState extends State<LandingScreen> {
                   );
                 }
                 if (streamSnapshot.connectionState == ConnectionState.active) {
-                  Object? user = streamSnapshot.data;
+                  var user = streamSnapshot.data;
                   if (user == null) {
-                    return HomeScreen();
+                    return LoginScreen();
                   } else {
                     return HomeScreen();
                   }
