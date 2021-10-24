@@ -7,6 +7,7 @@ import 'package:medicalapp/screen/dashboard_screen.dart';
 import 'package:medicalapp/screen/doctor_profile_screen.dart';
 import 'package:medicalapp/screen/doctors_screen.dart';
 import 'package:medicalapp/screen/home_screen.dart';
+import 'package:medicalapp/screen/hospital_screen.dart';
 import 'package:medicalapp/screen/lab_payment_screen.dart';
 import 'package:medicalapp/screen/lab_screen.dart';
 import 'package:medicalapp/screen/landing_screen.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.settingsScreen: (context) => SettingsScreen(),
           MyRoutes.labPaymentScreen: (context) => LabPaymentScreen(),
           MyRoutes.vaccineScreen: (context) => VaccineScreen(),
+          MyRoutes.hospitalScreen: (context) => HospitalScreen(),
         });
   }
 }

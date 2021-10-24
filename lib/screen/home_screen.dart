@@ -88,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                     Column(
                       children: [
                         GestureDetector(
-                          onTap: ()=> Navigator.pushNamed(context, "/vaccine"),
+                          onTap: () => Navigator.pushNamed(context, "/vaccine"),
                           child: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
@@ -166,7 +166,8 @@ class HomeScreen extends StatelessWidget {
                     Column(
                       children: [
                         GestureDetector(
-                          onTap: () => Navigator.pushNamed(context, "/bed"),
+                          onTap: () =>
+                              Navigator.pushNamed(context, "/hospital"),
                           child: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
@@ -180,7 +181,7 @@ class HomeScreen extends StatelessWidget {
                           height: 6.0,
                         ),
                         Text(
-                          "Beds",
+                          "Hospital",
                           style: MyStyles.paragraph,
                         ),
                       ],

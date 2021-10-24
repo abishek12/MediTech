@@ -13,4 +13,5 @@ class MyRoutes {
   static String settingsScreen = "/settings";
   static String labPaymentScreen = "/labPayment";
   static String vaccineScreen = "/vaccine";
+  static String hospitalScreen = "/hospital";
 }
