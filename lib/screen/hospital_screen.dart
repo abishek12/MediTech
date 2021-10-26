@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:medicalapp/screen/book_hospital_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
@@ -8,50 +10,51 @@ import 'package:medicalapp/widgets/custom_drawer.dart';
 class HospitalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _hospitalStream =
-        FirebaseFirestore.instance.collection('hospital').snapshots();
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance.collection('hospital').snapshots(),
+      builder: (_, snapshot) {
+        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: _hospitalStream,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return AlertDialog(
-            content: Text('Something went wrong'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("Go Back"),
-              )
-            ],
+        if (snapshot.hasData) {
+          final docs = snapshot.data!.docs;
+          return Scaffold(
+            appBar: myAppBar("Hospital"),
+            drawer: MyDrawer(),
+            body: ListView.builder(
+              itemCount: docs.length,
+              itemBuilder: (_, i) {
+                final data = docs[i].data();
+                return Container(
+                  margin: EdgeInsets.all(16.0),
+                  child: Card(
+                    child: ListTile(
+                      leading: Image.asset("assets/icons/hospital.png"),
+                      title: Text(data['name']),
+                      subtitle: Text(data['address'] + "  " + data['contact']),
+                      trailing: IconButton(
+                        icon: Icon(
+                          CupertinoIcons.arrow_right_circle,
+                        ),
+                        onPressed: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => BookHospitalScreen(
+                                      hospitalName: data['name'],
+                                      hospitalAddress: data['address'],
+                                      hospitalContact: data['contact'],
+                                      hospitalRemainingBeds:
+                                          data['remainingBeds'],
+                                      hospitalTotalBeds: data['totalBeds'],
+                                    ))),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return AlertDialog(
-            content: Text('There is no data'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("Go Back"),
-              )
-            ],
-          );
-        }
-
-        return Scaffold(
-          appBar: myAppBar("Hospital"),
-          drawer: MyDrawer(),
-          body: ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-              return ListTile(
-                title: Text(data['full_name']),
-                subtitle: Text(data['company']),
-              );
-            }).toList(),
-          ),
-        );
+        return Center(child: CircularProgressIndicator());
       },
     );
   }

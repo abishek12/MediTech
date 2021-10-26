@@ -1,46 +1,87 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
-import 'package:medicalapp/widgets/labtest.dart';
 
-class LabScreen extends StatelessWidget {
-  const LabScreen({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class LabScreen extends StatefulWidget {
+  @override
+  _LabScreenState createState() => _LabScreenState();
+}
 
+class _LabScreenState extends State<LabScreen> {
+  String _dropDownValue = "";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: myAppBar("Lab Test"),
-      drawer: MyDrawer(),
-      body: ListView(
-        children: [
-          LabTest(
-            title: "COVID-19",
-            subtitle: "2000",
-            onPressed: () => Navigator.pushNamed(context, "/labPayment"),
-          ),
-          LabTest(
-            title: "Blood Group",
-            subtitle: "250",
-            onPressed: () => Navigator.pushNamed(context, "/labPayment"),
-          ),
-          LabTest(
-            title: "Sugar Test",
-            subtitle: "100",
-            onPressed: () => Navigator.pushNamed(context, "/labPayment"),
-          ),
-          LabTest(
-            title: "Urine, Stool",
-            subtitle: "500",
-            onPressed: () => Navigator.pushNamed(context, "/labPayment"),
-          ),
-          LabTest(
-            title: "COVID-19",
-            subtitle: "2000",
-            onPressed: () => Navigator.pushNamed(context, "/labPayment"),
-          ),
-        ],
-      ),
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance.collection('labTest').snapshots(),
+      builder: (_, snapshot) {
+        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+
+        if (snapshot.hasData) {
+          final docs = snapshot.data!.docs;
+          return Scaffold(
+              appBar: myAppBar("lab Test"),
+              drawer: MyDrawer(),
+              body: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                    ),
+                    child: DropdownButton(
+                      hint: _dropDownValue == ""
+                          ? Text('Please select hospital')
+                          : Text(_dropDownValue),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      items: [
+                        'Bir Hospital',
+                        'Teaching Hospital',
+                        'Peoples Dental'
+                      ].map(
+                        (val) {
+                          return DropdownMenuItem<String>(
+                            value: val,
+                            child: Text(val),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (val) {
+                        setState(
+                          () {
+                            _dropDownValue = val.toString();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: docs.length,
+                      itemBuilder: (_, i) {
+                        final data = docs[i].data();
+                        return Container(
+                          margin: EdgeInsets.all(16.0),
+                          child: Card(
+                            child: ListTile(
+                              title: Text(data['name']),
+                              subtitle: Text("Rs. " + data['price']),
+                              trailing: Text(data['hospital']),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ));
+        }
+
+        return Center(child: CircularProgressIndicator());
+      },
     );
   }
 }
