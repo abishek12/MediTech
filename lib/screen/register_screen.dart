@@ -18,12 +18,16 @@ class RegisterScreen extends StatelessWidget {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: _email, password: _password)
             .then((value) => FirebaseFirestore.instance
-                    .collection("users")
+                    .collection("doctor")
                     .doc(value.user!.uid)
                     .set({
                   "fullName": _fullName,
                   "email": _email,
                   "role": "doctor",
+                  "description": "",
+                  "likes": "",
+                  "rating": "",
+                  "images": "",
                 }));
         Navigator.pushNamed(context, "/landing");
       } on FirebaseAuthException catch (e) {

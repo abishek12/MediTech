@@ -15,7 +15,10 @@ class _LabScreenState extends State<LabScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: FirebaseFirestore.instance.collection('labTest').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('labTest')
+          .where("address", isEqualTo: "$_dropDownValue")
+          .snapshots(),
       builder: (_, snapshot) {
         if (snapshot.hasError) return Text('Error = ${snapshot.error}');
 
@@ -53,6 +56,7 @@ class _LabScreenState extends State<LabScreen> {
                         setState(
                           () {
                             _dropDownValue = val.toString();
+                            print(_dropDownValue);
                           },
                         );
                       },
