@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
           MyRoutes.homeScreen: (context) => HomeScreen(),
           MyRoutes.chatScreen: (context) => ChatScreen(),
           MyRoutes.doctorScreen: (context) => DoctorScreen(),
-          MyRoutes.doctorProfileScreen: (context) => DoctorProfileScreen(),
           MyRoutes.bedScreen: (context) => BedScreen(),
           MyRoutes.dashboardScreen: (context) => DashboardScreen(),
           MyRoutes.labScreen: (context) => LabScreen(),

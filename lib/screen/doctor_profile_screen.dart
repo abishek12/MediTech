@@ -4,7 +4,23 @@ import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
-  const DoctorProfileScreen({Key? key}) : super(key: key);
+  final String fullName;
+  final String email;
+  final String likes;
+  final String rating;
+  final String address;
+  final String contact;
+  final String licensesNumber;
+  final String description;
+  DoctorProfileScreen(
+      {required this.fullName,
+      required this.email,
+      required this.likes,
+      required this.rating,
+      required this.address,
+      required this.contact,
+      required this.licensesNumber,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +50,11 @@ class DoctorProfileScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Abishek Khanal"),
+                      Text(fullName),
                       SizedBox(
                         height: 4.0,
                       ),
-                      Text("abishek@gmail.com"),
+                      Text(email),
                     ],
                   ),
                   SizedBox(
@@ -75,7 +91,7 @@ class DoctorProfileScreen extends StatelessWidget {
                       SizedBox(
                         height: 4.0,
                       ),
-                      Text("300+"),
+                      Text("$rating"),
                     ],
                   ),
                   Column(
@@ -86,7 +102,7 @@ class DoctorProfileScreen extends StatelessWidget {
                       SizedBox(
                         height: 4.0,
                       ),
-                      Text("300+"),
+                      Text(likes),
                     ],
                   ),
                   Column(
@@ -97,7 +113,9 @@ class DoctorProfileScreen extends StatelessWidget {
                       SizedBox(
                         height: 4.0,
                       ),
-                      Text("300+"),
+                      Text(
+                        "$rating" == "" ? "0" : description,
+                      ),
                     ],
                   ),
                 ],
@@ -125,7 +143,7 @@ class DoctorProfileScreen extends StatelessWidget {
                   SizedBox(
                     width: 16.0,
                   ),
-                  Text("Register Number"),
+                  Text("$licensesNumber"),
                 ],
               ),
             ),
@@ -151,7 +169,7 @@ class DoctorProfileScreen extends StatelessWidget {
                   SizedBox(
                     width: 16.0,
                   ),
-                  Text("9860162323"),
+                  Text("$contact"),
                 ],
               ),
             ),
@@ -177,7 +195,7 @@ class DoctorProfileScreen extends StatelessWidget {
                   SizedBox(
                     width: 16.0,
                   ),
-                  Text("Dhungedhara-4, Kathmandu, Nepal"),
+                  Text("$address"),
                 ],
               ),
             ),
@@ -212,7 +230,7 @@ class DoctorProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec gravida vitae ex sit amet commodo. Curabitur quam risus, porttitor eget pulvinar a, porta sed sem. Nam quis porttitor est. Mauris non dui quis purus pharetra congue. Suspendisse elementum magna nisl, ut euismod erat lobortis eu. Pellentesque id felis rhoncus, egestas ex a, semper tellus. Donec tempus fringilla mi, id molestie mauris aliquet eu. Praesent at tempus est, eu volutpat dui. Etiam vitae leo a mauris tincidunt lacinia vitae nec sapien. Aenean id eros a enim gravida feugiat at ac eros. Nullam hendrerit arcu vel finibus aliquet. Donec sollicitudin nisi vitae.",
+                    "$description" == "" ? "Nothing to Display" : description,
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
