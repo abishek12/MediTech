@@ -11,7 +11,7 @@ class HospitalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: FirebaseFirestore.instance.collection('hospital').snapshots(),
+      stream: FirebaseFirestore.instance.collection('ward').snapshots(),
       builder: (_, snapshot) {
         if (snapshot.hasError) return Text('Error = ${snapshot.error}');
 
@@ -29,8 +29,9 @@ class HospitalScreen extends StatelessWidget {
                   child: Card(
                     child: ListTile(
                       leading: Image.asset("assets/icons/hospital.png"),
-                      title: Text(data['name']),
-                      subtitle: Text(data['address'] + "  " + data['contact']),
+                      title: Text(data['wardName']),
+                      subtitle:
+                          Text(data['totalBeds'] + "  " + data['contact']),
                       trailing: IconButton(
                         icon: Icon(
                           CupertinoIcons.arrow_right_circle,
@@ -38,11 +39,10 @@ class HospitalScreen extends StatelessWidget {
                         onPressed: () =>
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => BookHospitalScreen(
-                                      hospitalName: data['name'],
-                                      hospitalAddress: data['address'],
+                                      hospitalName: data['wardName'],
                                       hospitalContact: data['contact'],
                                       hospitalRemainingBeds:
-                                          data['remainingBeds'],
+                                          data['availableBeds'],
                                       hospitalTotalBeds: data['totalBeds'],
                                     ))),
                       ),

@@ -17,7 +17,7 @@ class DoctorScreen extends StatelessWidget {
             onTap: () => Navigator.pushNamed(context, "/doctorProfile"),
             child: TopRatedDoctor(
               imageName: "doctor1.jpg",
-              doctorName: "Ram Subedi",
+              doctorName: "Ram Prasad Subedi",
               doctorEmail: "ram@gmail.com",
               likes: 500,
             ),
