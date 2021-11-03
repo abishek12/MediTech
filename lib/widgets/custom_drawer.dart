@@ -57,17 +57,6 @@ class MyDrawer extends StatelessWidget {
               color: Colors.green,
             ),
           ),
-          drawerItems(
-            context,
-            () {
-              FirebaseAuth.instance.signOut();
-            },
-            "Logout",
-            Icon(
-              CupertinoIcons.arrow_right_square,
-              color: Colors.green,
-            ),
-          ),
           Divider(
             thickness: 1,
             height: 1,

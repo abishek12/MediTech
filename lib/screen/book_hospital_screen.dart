@@ -7,13 +7,11 @@ import 'package:medicalapp/widgets/custom_drawer.dart';
 // ignore: must_be_immutable
 class BookHospitalScreen extends StatefulWidget {
   String hospitalName = "";
-  String hospitalAddress = "";
   String hospitalContact = "";
   String hospitalRemainingBeds = "";
   String hospitalTotalBeds = "";
   BookHospitalScreen(
       {required this.hospitalName,
-      required this.hospitalAddress,
       required this.hospitalContact,
       required this.hospitalRemainingBeds,
       required this.hospitalTotalBeds});
@@ -93,7 +91,7 @@ class _BookHospitalScreenState extends State<BookHospitalScreen> {
                         height: 8.0,
                       ),
                       Text(
-                        "Addrees: " + widget.hospitalAddress,
+                        "Addrees: " + "MahaBouddha",
                       ),
                     ],
                   ),
