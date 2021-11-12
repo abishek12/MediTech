@@ -20,7 +20,6 @@ class BookHospitalScreen extends StatefulWidget {
 }
 
 class _BookHospitalScreenState extends State<BookHospitalScreen> {
-  static bool _isBooked = false;
   static int _remainingData = 0;
 
   _bookHospitalButton() {

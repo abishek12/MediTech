@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:medicalapp/screen/book_hospital_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
 // ignore: must_be_immutable
+const String testPublicKey = 'test_public_key_dc74e0fd57cb46cd93832aee0a507256';
+
 class LabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,15 @@ class LabScreen extends StatelessWidget {
                       title: Text(data['name']),
                       subtitle: Text(
                         data['price'],
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.payment,
+                          color: Colors.lightGreen,
+                        ),
+                        onPressed: () {
+
+                        },
                       ),
                     ),
                   ),
