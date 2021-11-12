@@ -4,7 +4,6 @@ import 'package:medicalapp/constants/routes.dart';
 import 'package:medicalapp/screen/beds.dart';
 import 'package:medicalapp/screen/chat_screen.dart';
 import 'package:medicalapp/screen/dashboard_screen.dart';
-import 'package:medicalapp/screen/doctor_profile_screen.dart';
 import 'package:medicalapp/screen/doctors_screen.dart';
 import 'package:medicalapp/screen/home_screen.dart';
 import 'package:medicalapp/screen/hospital_screen.dart';
@@ -14,8 +13,8 @@ import 'package:medicalapp/screen/landing_screen.dart';
 import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/screen/register_patient.dart';
 import 'package:medicalapp/screen/register_screen.dart';
-import 'package:medicalapp/screen/settings.dart';
 import 'package:medicalapp/screen/vaccine.dart';
+import 'package:medicalapp/screen/settings.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
