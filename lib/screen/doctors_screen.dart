@@ -11,10 +11,12 @@ class DoctorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: FirebaseFirestore.instance.collection('doctor').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('user')
+          .where("role", isEqualTo: "doctor")
+          .snapshots(),
       builder: (_, snapshot) {
         if (snapshot.hasError) return Text('Error = ${snapshot.error}');
-
         if (snapshot.hasData) {
           final docs = snapshot.data!.docs;
           return Scaffold(
@@ -28,28 +30,35 @@ class DoctorScreen extends StatelessWidget {
                   margin: EdgeInsets.all(16.0),
                   child: Card(
                     elevation: 2.0,
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 30.0,
-                        backgroundImage:
-                            AssetImage("assets/images/doctor1.jpg"),
-                      ),
-                      title: Text(data['fullName']),
-                      subtitle: Text(data['email']),
-                      trailing: IconButton(
-                        icon: Icon(CupertinoIcons.arrow_right_circle),
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => DoctorProfileScreen(
-                                      fullName: data['fullName'],
-                                      email: data['email'],
-                                      likes: data['likes'],
-                                      rating: data['rating'],
-                                      address: data['address'],
-                                      contact: data['contact'],
-                                      licensesNumber: data['licenses_number'],
-                                      description: data['description'],
-                                    ))),
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30.0,
+                          backgroundImage:
+                              AssetImage("assets/images/doctor1.jpg"),
+                        ),
+                        title: Text(
+                          data['fullName'],
+                        ),
+                        subtitle: Text(
+                          data['email'],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(CupertinoIcons.arrow_right_circle),
+                          onPressed: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => DoctorProfileScreen(
+                                        fullName: data['fullName'],
+                                        email: data['email'],
+                                        likes: data['likes'],
+                                        rating: data['rating'],
+                                        address: data['address'],
+                                        contact: data['contact'],
+                                        licensesNumber: data['licenses_number'],
+                                        description: data['description'],
+                                      ))),
+                        ),
                       ),
                     ),
                   ),

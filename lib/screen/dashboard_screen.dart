@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
@@ -8,20 +9,29 @@ import 'package:medicalapp/widgets/custom_drawer.dart';
 // ignore: must_be_immutable
 class DashboardScreen extends StatelessWidget {
   String _userId = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('doctor');
+    CollectionReference users = FirebaseFirestore.instance.collection('user');
 
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(_userId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text("Something went wrong");
+          return Scaffold(
+            body: Center(
+              child: Text("Something went wrong"),
+            ),
+          );
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
+          return Scaffold(
+            body: Center(
+              child: Text("Document does not exist"),
+            ),
+          );
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
@@ -30,6 +40,12 @@ class DashboardScreen extends StatelessWidget {
           return Scaffold(
             appBar: myAppBar("Dashboard"),
             drawer: MyDrawer(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {},
+              child: Icon(
+                CupertinoIcons.pen,
+              ),
+            ),
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +79,7 @@ class DashboardScreen extends StatelessWidget {
                             Column(
                               children: [
                                 Text("Like"),
-                                Text(data["likes"]),
+                                Text(data["likes"] == 0 ? "0" : data["likes"]),
                               ],
                             ),
                             SizedBox(
@@ -72,7 +88,8 @@ class DashboardScreen extends StatelessWidget {
                             Column(
                               children: [
                                 Text("Rating"),
-                                Text(data["rating"]),
+                                Text(
+                                    data["rating"] == 0 ? "0" : data["rating"]),
                               ],
                             ),
                           ],
@@ -118,7 +135,9 @@ class DashboardScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          body: CircularProgressIndicator(),
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
         );
       },
     );

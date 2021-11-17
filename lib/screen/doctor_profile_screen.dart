@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medicalapp/screen/book_appointment.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
-class DoctorProfileScreen extends StatelessWidget {
+class DoctorProfileScreen extends StatefulWidget {
   final String fullName;
   final String email;
   final String likes;
@@ -12,6 +13,7 @@ class DoctorProfileScreen extends StatelessWidget {
   final String contact;
   final String licensesNumber;
   final String description;
+
   DoctorProfileScreen(
       {required this.fullName,
       required this.email,
@@ -22,6 +24,11 @@ class DoctorProfileScreen extends StatelessWidget {
       required this.licensesNumber,
       required this.description});
 
+  @override
+  State<DoctorProfileScreen> createState() => _DoctorProfileScreenState();
+}
+
+class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,23 +57,24 @@ class DoctorProfileScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(fullName),
+                      Text(widget.fullName),
                       SizedBox(
                         height: 4.0,
                       ),
-                      Text(email),
+                      Text(widget.email),
                     ],
-                  ),
-                  SizedBox(
-                    width: 64.0,
                   ),
                   Column(
                     children: [
-                      Icon(CupertinoIcons.heart),
+                      IconButton(
+                        onPressed: () {
+                          print("Like");
+                        },
+                        icon: Icon(CupertinoIcons.heart),
+                      ),
                       SizedBox(
                         height: 4.0,
                       ),
-                      Icon(CupertinoIcons.heart),
                     ],
                   ),
                 ],
@@ -80,45 +88,26 @@ class DoctorProfileScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        "Total Patient",
-                      ),
-                      SizedBox(
-                        height: 4.0,
-                      ),
-                      Text("$rating"),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Like",
-                      ),
-                      SizedBox(
-                        height: 4.0,
-                      ),
-                      Text(likes),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Rating",
-                      ),
-                      SizedBox(
-                        height: 4.0,
-                      ),
-                      Text(
-                        "$rating" == "" ? "0" : description,
-                      ),
-                    ],
-                  ),
-                ],
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Rating : ",
+                        ),
+                        SizedBox(
+                          width: 16.0,
+                        ),
+                        Text(
+                          "${widget.rating}" == "" ? "0" : widget.rating,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             // doctor information
@@ -143,7 +132,7 @@ class DoctorProfileScreen extends StatelessWidget {
                   SizedBox(
                     width: 16.0,
                   ),
-                  Text("$licensesNumber"),
+                  Text("${widget.licensesNumber}"),
                 ],
               ),
             ),
@@ -169,7 +158,7 @@ class DoctorProfileScreen extends StatelessWidget {
                   SizedBox(
                     width: 16.0,
                   ),
-                  Text("$contact"),
+                  Text("${widget.contact}"),
                 ],
               ),
             ),
@@ -195,7 +184,7 @@ class DoctorProfileScreen extends StatelessWidget {
                   SizedBox(
                     width: 16.0,
                   ),
-                  Text("$address"),
+                  Text("${widget.address}"),
                 ],
               ),
             ),
@@ -230,12 +219,34 @@ class DoctorProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "$description" == "" ? "Nothing to Display" : description,
+                    "${widget.description}" == ""
+                        ? "Nothing to Display"
+                        : widget.description,
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
-                  )
+                  ),
                 ],
+              ),
+            ),
+
+            Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookAppointment(
+                        doctorName: widget.fullName,
+                        doctorAddress: widget.address,
+                        doctorContact: widget.contact,
+                      ),
+                    ),
+                  );
+                },
+                child: Text("Make an Appointment"),
               ),
             ),
           ],

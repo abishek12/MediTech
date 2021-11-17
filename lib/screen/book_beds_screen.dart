@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
@@ -10,11 +12,15 @@ class BookHospitalScreen extends StatefulWidget {
   String hospitalContact = "";
   String hospitalRemainingBeds = "";
   String hospitalTotalBeds = "";
+  String id = "";
+
   BookHospitalScreen(
       {required this.hospitalName,
       required this.hospitalContact,
       required this.hospitalRemainingBeds,
-      required this.hospitalTotalBeds});
+      required this.hospitalTotalBeds,
+      required this.id});
+
   @override
   _BookHospitalScreenState createState() => _BookHospitalScreenState();
 }
@@ -23,22 +29,19 @@ class _BookHospitalScreenState extends State<BookHospitalScreen> {
   static int _remainingData = 0;
 
   _bookHospitalButton() {
-    return showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            content: Image.asset("assets/images/checkmark.png"),
-            actions: [
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, "/hospital");
-                },
-                child: Text("Completed"),
-              )
-            ],
-          );
-        });
+    String _userId = FirebaseAuth.instance.currentUser!.uid.toString();
+    CollectionReference _bookBed =
+        FirebaseFirestore.instance.collection("bookBed");
+    return _bookBed.doc(_userId).set({
+      "userId": _userId,
+      "ward": widget.hospitalName,
+      "contact": widget.hospitalContact,
+      "totalBed": _remainingData,
+    }).then((value) =>
+        FirebaseFirestore.instance.collection("ward").doc(widget.id).update({
+          "availableBeds":
+              int.parse(widget.hospitalRemainingBeds) - _remainingData,
+        }));
   }
 
   @override
