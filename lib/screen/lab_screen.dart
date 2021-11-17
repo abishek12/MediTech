@@ -6,9 +6,12 @@ import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
 // ignore: must_be_immutable
-const String testPublicKey = 'test_public_key_dc74e0fd57cb46cd93832aee0a507256';
+class LabScreen extends StatefulWidget {
+  @override
+  State<LabScreen> createState() => _LabScreenState();
+}
 
-class LabScreen extends StatelessWidget {
+class _LabScreenState extends State<LabScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -40,7 +43,7 @@ class LabScreen extends StatelessWidget {
                           color: Colors.lightGreen,
                         ),
                         onPressed: () {
-
+                          Navigator.pushNamed(context, "/labPayment");
                         },
                       ),
                     ),

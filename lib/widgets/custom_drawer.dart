@@ -31,7 +31,7 @@ class MyDrawer extends StatelessWidget {
           // appointment
           drawerItems(
             context,
-            () {},
+            () => Navigator.pushNamed(context, "/appointment"),
             "Appointment",
             Icon(
               CupertinoIcons.calendar,
@@ -48,6 +48,17 @@ class MyDrawer extends StatelessWidget {
               color: Colors.green,
             ),
           ),
+          //logout
+          drawerItems(
+            context,
+            () => FirebaseAuth.instance.signOut(),
+            "Logout",
+            Icon(
+              CupertinoIcons.square_arrow_right_fill,
+              color: Colors.green,
+            ),
+          ),
+          // dashboard
           drawerItems(
             context,
             () => Navigator.pushNamed(context, "/dashboard"),

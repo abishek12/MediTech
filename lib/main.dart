@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/colors.dart';
 import 'package:medicalapp/constants/routes.dart';
+import 'package:medicalapp/screen/appointment.dart';
 import 'package:medicalapp/screen/beds.dart';
 import 'package:medicalapp/screen/chat_screen.dart';
 import 'package:medicalapp/screen/dashboard_screen.dart';
@@ -21,9 +22,14 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +53,7 @@ class MyApp extends StatelessWidget {
           MyRoutes.labPaymentScreen: (context) => LabPaymentScreen(),
           MyRoutes.vaccineScreen: (context) => VaccineScreen(),
           MyRoutes.hospitalScreen: (context) => HospitalScreen(),
+          MyRoutes.appointmentScreen: (context) => AppointmentScreen(),
         });
   }
 }

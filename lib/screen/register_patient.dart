@@ -1,30 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medicalapp/constants/styles.dart';
+import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_text.dart';
 
 class RegisterPatientScreen extends StatelessWidget {
-  const RegisterPatientScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    String _fullname = "";
     String _email = "";
     String _password = "";
+    String _fullName = "";
+    String _contact = "";
+    String _address = "";
+    String _age = "";
 
     _registerPatient() async {
       try {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: _email, password: _password)
             .then((value) => FirebaseFirestore.instance
-                    .collection("users")
-                    .doc(value.user!.uid)
-                    .set({
-                  "fullname": _fullname,
-                  "email": _email,
-                  "role": "patient",
-                }));
+            .collection("user")
+            .doc(value.user!.uid)
+            .set({
+          "fullName": _fullName,
+          "email": _email,
+          "contact": _contact,
+          "address": _address,
+          "role": "patient",
+          "specification": "",
+          "age": _age,
+          "joinedDate": DateTime.now()
+        }));
+        print("$_fullName, $_email");
         Navigator.pushNamed(context, "/login");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -38,58 +46,75 @@ class RegisterPatientScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Register as a Patient"),
-            Container(
-              margin: EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  CustomTextField(
-                    helperText: "Email",
-                    hintText: 'Enter email address',
-                    obscureText: false,
-                    onChanged: (value) {
-                      _email = value;
-                    },
-                  ),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  CustomTextField(
-                    helperText: "Password",
-                    hintText: 'Enter password',
-                    obscureText: true,
-                    onChanged: (value) {
-                      _password = value;
-                    },
-                  ),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _registerPatient();
-                      },
-                      child: Text("Register"),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text("Back To Login"),
-                    ),
-                  ),
-                ],
+      appBar: myAppBar("Register"),
+      body: ListView(
+        children: [
+          Center(
+            child: Container(
+              margin: EdgeInsets.only(top: 64.0),
+              child: Text(
+                "Register a Patient",
+                style: MyStyles.heading,
               ),
             ),
-          ],
-        ),
+          ),
+          CustomTextField(
+            helperText: "Fullname",
+            hintText: "Enter Fullname",
+            onChanged: (value) {
+              _fullName = value;
+            },
+            obscureText: false,
+          ),
+          CustomTextField(
+            helperText: "Email",
+            hintText: "Enter email address",
+            onChanged: (value) {
+              _email = value;
+            },
+            obscureText: false,
+          ),
+          CustomTextField(
+            helperText: "Password",
+            hintText: "Enter password",
+            onChanged: (value) {
+              _password = value;
+            },
+            obscureText: true,
+          ),
+          CustomTextField(
+            helperText: "Contact",
+            hintText: "Enter phone number",
+            onChanged: (value) {
+              _contact = value;
+            },
+            obscureText: false,
+          ),
+          CustomTextField(
+            helperText: "Address",
+            hintText: "Enter address",
+            onChanged: (value) {
+              _address = value;
+            },
+            obscureText: false,
+          ),
+          CustomTextField(
+            helperText: "Age",
+            hintText: "Enter age",
+            onChanged: (value) {
+              _age = value;
+            },
+            obscureText: false,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () => _registerPatient(),
+              child: Text("Register"),
+            ),
+          )
+        ],
       ),
     );
   }
