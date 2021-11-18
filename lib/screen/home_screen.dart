@@ -1,28 +1,138 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medicalapp/constants/styles.dart';
+import 'package:medicalapp/main.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_carousel.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 import 'package:medicalapp/widgets/doctor_carousel.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class CheckUserRole extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection('user')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .snapshots(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text("something went wrong"),
+          );
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          default:
+            if (snapshot.data!['role'] == "patient") {
+              return PatientHomeScreen();
+            } else {
+              return DoctorHomeScreen();
+            }
+        }
+      },
+    );
+  }
+}
 
+class DoctorHomeScreen extends StatelessWidget {
+  const DoctorHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: myAppBar("Doctor (Home)"),
+      drawer: MyDrawer(),
+      body: DoubleBackToCloseApp(
+        snackBar: SnackBar(
+          content: Text('Tap back again to logout'),
+          action: SnackBarAction(
+              label: "Logout",
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              }),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.all(16.0),
+                  child: SizedBox(
+                    height: 200,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        CustomCarousel(
+                          imageName: "doctor1.jpg",
+                          imageDescription: "First Image",
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        CustomCarousel(
+                          imageName: "doctor2.jpg",
+                          imageDescription: "First Image",
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        CustomCarousel(
+                          imageName: "doctor3.jpg",
+                          imageDescription: "First Image",
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        CustomCarousel(
+                          imageName: "doctor1.jpg",
+                          imageDescription: "First Image",
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        CustomCarousel(
+                          imageName: "doctor2.jpg",
+                          imageDescription: "First Image",
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PatientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar("Home"),
       drawer: MyDrawer(),
-      body:  DoubleBackToCloseApp(
+      body: DoubleBackToCloseApp(
         snackBar: SnackBar(
           content: Text('Tap back again to logout'),
-          action: SnackBarAction(label: "Logout", onPressed: (){
-            FirebaseAuth.instance.signOut();
-          }),
+          action: SnackBarAction(
+              label: "Logout",
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              }),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -98,7 +208,8 @@ class HomeScreen extends StatelessWidget {
                       Column(
                         children: [
                           GestureDetector(
-                            onTap: () => Navigator.pushNamed(context, "/vaccine"),
+                            onTap: () =>
+                                Navigator.pushNamed(context, "/vaccine"),
                             child: Container(
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
@@ -121,7 +232,8 @@ class HomeScreen extends StatelessWidget {
                       Column(
                         children: [
                           GestureDetector(
-                            onTap: () => Navigator.pushNamed(context, "/doctor"),
+                            onTap: () =>
+                                Navigator.pushNamed(context, "/doctor"),
                             child: Container(
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
@@ -184,7 +296,8 @@ class HomeScreen extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(40.0),
                               ),
-                              child: Image.asset("assets/icons/hospitalbed.png"),
+                              child:
+                                  Image.asset("assets/icons/hospitalbed.png"),
                             ),
                           ),
                           SizedBox(
@@ -215,21 +328,24 @@ class HomeScreen extends StatelessWidget {
                                           // contact number
                                           Container(
                                             padding: EdgeInsets.all(8.0),
-                                            width:
-                                                MediaQuery.of(context).size.width,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text("+977 9860162323"),
                                                 GestureDetector(
                                                   onTap: () {
                                                     Clipboard.setData(
                                                         ClipboardData(
-                                                            text: "9860162323"));
+                                                            text:
+                                                                "9860162323"));
                                                   },
                                                   child: Container(
                                                     child: Icon(CupertinoIcons
@@ -245,14 +361,16 @@ class HomeScreen extends StatelessWidget {
                                           // contact email
                                           Container(
                                             padding: EdgeInsets.all(8.0),
-                                            width:
-                                                MediaQuery.of(context).size.width,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                             ),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text("support@abishek.com"),
                                                 GestureDetector(

@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
           MyRoutes.loginScreen: (context) => LoginScreen(),
           MyRoutes.registerScreen: (context) => RegisterScreen(),
           MyRoutes.registerPatientScreen: (context) => RegisterPatientScreen(),
-          MyRoutes.homeScreen: (context) => HomeScreen(),
+          MyRoutes.homeScreen: (context) => CheckUserRole(),
           MyRoutes.chatScreen: (context) => ChatScreen(),
           MyRoutes.doctorScreen: (context) => DoctorScreen(),
           MyRoutes.bedScreen: (context) => BedScreen(),
