@@ -5,7 +5,12 @@ import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_text.dart';
 
-class RegisterPatientScreen extends StatelessWidget {
+class RegisterPatientScreen extends StatefulWidget {
+  @override
+  State<RegisterPatientScreen> createState() => _RegisterPatientScreenState();
+}
+
+class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
   @override
   Widget build(BuildContext context) {
     String _email = "";
