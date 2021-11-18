@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
@@ -7,17 +9,13 @@ class VaccineBook extends StatefulWidget {
   String vName = "";
   String vDose = "";
   String vContact = "";
-  String time = "";
   String patientName = "";
-  String datePicker = "";
 
   VaccineBook({
     required this.vName,
     required this.vDose,
     required this.vContact,
-    required this.time,
     required this.patientName,
-    required this.datePicker,
   });
 
   @override
@@ -27,8 +25,23 @@ class VaccineBook extends StatefulWidget {
 class _VaccineBookState extends State<VaccineBook> {
   @override
   Widget build(BuildContext context) {
+    DateTime selectedDate = DateTime.now();
+    String _dropDownValue = "";
     _bookVaccine() {
-      print("Working");
+      CollectionReference _bookVaccine =
+          FirebaseFirestore.instance.collection('bookVaccine');
+      _bookVaccine
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({
+            'vaccine_name': widget.vName,
+            'vaccine_dose': widget.vDose,
+            'vaccine_contact': widget.vContact,
+            'patient_name': widget.patientName,
+            'booked_date': "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
+            'booked_time': _dropDownValue,
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
     }
 
     List<String> timetable = [
@@ -40,8 +53,6 @@ class _VaccineBookState extends State<VaccineBook> {
       '03:00 - 04:00 P.M',
       '04:00 - 05:00 P.M',
     ];
-    DateTime selectedDate = DateTime.now();
-    String _dropDownValue = "";
     _selectDate(BuildContext context) async {
       final DateTime? selected = await showDatePicker(
         context: context,
@@ -139,32 +150,35 @@ class _VaccineBookState extends State<VaccineBook> {
                       "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}")
                 ],
               )),
-          DropdownButton(
-            hint: _dropDownValue == ""
-                ? Text('Dropdown')
-                : Text(
-                    _dropDownValue,
-                    style: TextStyle(color: Colors.blue),
-                  ),
-            isExpanded: true,
-            iconSize: 30.0,
-            style: TextStyle(color: Colors.blue),
-            items: timetable.map(
-              (val) {
-                return DropdownMenuItem<String>(
-                  value: val.toString(),
-                  child: Text(val),
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: DropdownButton(
+              hint: _dropDownValue == ""
+                  ? Text('Dropdown')
+                  : Text(
+                      _dropDownValue,
+                      style: TextStyle(color: Colors.blue),
+                    ),
+              isExpanded: true,
+              iconSize: 30.0,
+              style: TextStyle(color: Colors.blue),
+              items: timetable.map(
+                (val) {
+                  return DropdownMenuItem<String>(
+                    value: val,
+                    child: Text(val),
+                  );
+                },
+              ).toList(),
+              onChanged: (val) {
+                setState(
+                  () {
+                    _dropDownValue = val.toString();
+                    print("${_dropDownValue.toString()}");
+                  },
                 );
               },
-            ).toList(),
-            onChanged: (val) {
-              setState(
-                () {
-                  _dropDownValue = val.toString();
-                  print("${_dropDownValue.toString()}");
-                },
-              );
-            },
+            ),
           ),
           Container(
             width: MediaQuery.of(context).size.width,
