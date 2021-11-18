@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/main.dart';
+import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_carousel.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
@@ -36,8 +37,11 @@ class CheckUserRole extends StatelessWidget {
           default:
             if (snapshot.data!['role'] == "patient") {
               return PatientHomeScreen();
-            } else {
+            }
+            if (snapshot.data!['role'] == "doctor") {
               return DoctorHomeScreen();
+            } else {
+              return LoginScreen();
             }
         }
       },

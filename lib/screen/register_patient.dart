@@ -37,7 +37,6 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
           "age": _age,
           "joinedDate": DateTime.now()
         }));
-        print("$_fullName, $_email");
         Navigator.pushNamed(context, "/login");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
