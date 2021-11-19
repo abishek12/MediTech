@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1089237460744:android:1cc660f4e9e24b387f2ebd",
+        "android_client_info": {
+          "package_name": "com.example.medi_tect_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089237460744-cblq0mb7svgo6likjknv1n08c4nsgmnu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzIG2ZHevR_CNVnaKiu1hAaeIv8jfcUFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089237460744-cblq0mb7svgo6likjknv1n08c4nsgmnu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1089237460744:android:e0f86d78a20bfa5c7f2ebd",
         "android_client_info": {
           "package_name": "com.example.medicalapp"

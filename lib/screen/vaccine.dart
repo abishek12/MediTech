@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:medicalapp/screen/vaccine_book.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
@@ -44,6 +43,7 @@ class _VaccineScreenState extends State<VaccineScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => VaccineBook(
+                                        docId: snapshot.data!.docs[i].id,
                                         vName: data['name'],
                                         vContact: data['contact'],
                                         vDose: data['dose'],

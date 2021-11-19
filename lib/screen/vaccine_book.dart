@@ -1,17 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
+import 'package:medicalapp/screen/vaccine.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 class VaccineBook extends StatefulWidget {
+  String docId = "";
   String vName = "";
   String vDose = "";
   String vContact = "";
   String patientName = "";
+  String times = "";
 
   VaccineBook({
+    required this.docId,
     required this.vName,
     required this.vDose,
     required this.vContact,
@@ -23,25 +29,62 @@ class VaccineBook extends StatefulWidget {
 }
 
 class _VaccineBookState extends State<VaccineBook> {
+  DateTime? _dateTime;
+
   @override
   Widget build(BuildContext context) {
-    DateTime selectedDate = DateTime.now();
-    String _dropDownValue = "";
     _bookVaccine() {
-      CollectionReference _bookVaccine =
-          FirebaseFirestore.instance.collection('bookVaccine');
-      _bookVaccine
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set({
+      FirebaseFirestore.instance
+          .collection('bookVaccine')
+          .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          return showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("Error"),
+                  content: Text("You have already booked a date"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("Close"),
+                    )
+                  ],
+                );
+              });
+        } else {
+          CollectionReference _bookVaccine =
+              FirebaseFirestore.instance.collection('bookVaccine');
+          _bookVaccine.doc(FirebaseAuth.instance.currentUser!.uid).set({
             'vaccine_name': widget.vName,
             'vaccine_dose': widget.vDose,
             'vaccine_contact': widget.vContact,
             'patient_name': widget.patientName,
-            'booked_date': "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
-            'booked_time': _dropDownValue,
-          })
-          .then((value) => print("User Added"))
-          .catchError((error) => print("Failed to add user: $error"));
+            'booked_date':
+                "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
+            'booked_time': widget.times,
+          }).then((value) {
+            return showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (c) {
+                  return AlertDialog(
+                    title: Text("Success"),
+                    content: Text("Your Vaccination has been booked"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Done"),
+                      ),
+                    ],
+                  );
+                });
+          }).catchError((error) => print("Failed to add user: $error"));
+        }
+      });
     }
 
     List<String> timetable = [
@@ -53,18 +96,34 @@ class _VaccineBookState extends State<VaccineBook> {
       '03:00 - 04:00 P.M',
       '04:00 - 05:00 P.M',
     ];
-    _selectDate(BuildContext context) async {
-      final DateTime? selected = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2010),
-        lastDate: DateTime(2025),
-      );
-      if (selected != null && selected != selectedDate)
-        setState(() {
-          selectedDate = selected;
-        });
-    }
+
+    final List<Map<String, dynamic>> _timetable = [
+      {
+        'value': '10:00 - 11:00 A.M',
+        'label': '10:00 - 11:00 A.M',
+        'icon': Icon(CupertinoIcons.clock_solid),
+      },
+      {
+        'value': '11:00 - 12:00 P.M',
+        'label': '11:00 - 12:00 P.M',
+        'icon': Icon(CupertinoIcons.clock_solid),
+      },
+      {
+        'value': '12:00 - 01:00 P.M',
+        'label': '12:00 - 01:00 P.M',
+        'icon': Icon(CupertinoIcons.clock_solid),
+      },
+      {
+        'value': '01:00 - 02:00 P.M',
+        'label': '01:00 - 02:00 P.M',
+        'icon': Icon(CupertinoIcons.clock_solid),
+      },
+      {
+        'value': '02:00 - 03:00 P.M',
+        'label': '02:00 - 03:00 P.M',
+        'icon': Icon(CupertinoIcons.clock_solid),
+      },
+    ];
 
     return Scaffold(
       appBar: myAppBar("Book a Vaccine"),
@@ -137,46 +196,50 @@ class _VaccineBookState extends State<VaccineBook> {
           ),
           // date and time picked
           Container(
-              margin: EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      _selectDate(context);
-                    },
-                    child: Text("Choose Date"),
+            margin: EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  _dateTime == null
+                      ? "Select a date"
+                      : "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
+                ),
+                IconButton(
+                  icon: Icon(
+                    CupertinoIcons.clock_fill,
+                    color: Colors.blueAccent,
+                    size: 30.0,
                   ),
-                  Text(
-                      "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}")
-                ],
-              )),
+                  onPressed: () {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime(2020, 11, 17),
+                      firstDate: DateTime(2017, 1),
+                      lastDate: DateTime(2022, 7),
+                      helpText: 'Select a date',
+                    ).then((value) {
+                      setState(() {
+                        _dateTime = value!;
+                      });
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
           Container(
             margin: EdgeInsets.all(16.0),
-            child: DropdownButton(
-              hint: _dropDownValue == ""
-                  ? Text('Dropdown')
-                  : Text(
-                      _dropDownValue,
-                      style: TextStyle(color: Colors.blue),
-                    ),
-              isExpanded: true,
-              iconSize: 30.0,
-              style: TextStyle(color: Colors.blue),
-              items: timetable.map(
-                (val) {
-                  return DropdownMenuItem<String>(
-                    value: val,
-                    child: Text(val),
-                  );
-                },
-              ).toList(),
+            child: SelectFormField(
+              type: SelectFormFieldType.dropdown,
+              // or can be dialog
+              labelText: 'Time',
+              items: _timetable,
               onChanged: (val) {
-                setState(
-                  () {
-                    _dropDownValue = val.toString();
-                    print("${_dropDownValue.toString()}");
-                  },
-                );
+                widget.times = val.toString();
+              },
+              onSaved: (val) {
+                widget.times = val.toString();
               },
             ),
           ),

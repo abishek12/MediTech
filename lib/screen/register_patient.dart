@@ -13,30 +13,31 @@ class RegisterPatientScreen extends StatefulWidget {
 class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
   @override
   Widget build(BuildContext context) {
-    String _email = "";
-    String _password = "";
-    String _fullName = "";
-    String _contact = "";
-    String _address = "";
-    String _age = "";
+    TextEditingController _email = TextEditingController();
+    TextEditingController _password = TextEditingController();
+    TextEditingController _fullName = TextEditingController();
+    TextEditingController _contact = TextEditingController();
+    TextEditingController _address = TextEditingController();
+    TextEditingController _age = TextEditingController();
 
     _registerPatient() async {
       try {
         await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: _email, password: _password)
+            .createUserWithEmailAndPassword(
+                email: "${_email.text}", password: "${_password.text}")
             .then((value) => FirebaseFirestore.instance
-            .collection("user")
-            .doc(value.user!.uid)
-            .set({
-          "fullName": _fullName,
-          "email": _email,
-          "contact": _contact,
-          "address": _address,
-          "role": "patient",
-          "specification": "",
-          "age": _age,
-          "joinedDate": DateTime.now()
-        }));
+                    .collection("user")
+                    .doc(value.user!.uid)
+                    .set({
+                  "fullName": "${_fullName.text}",
+                  "email": "${_email.text}",
+                  "contact": "${_contact.text}",
+                  "address": "${_address.text}",
+                  "role": "patient",
+                  "specification": "",
+                  "age": "${_age.text}",
+                  "joinedDate": DateTime.now()
+                }));
         Navigator.pushNamed(context, "/login");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
@@ -62,53 +63,32 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
               ),
             ),
           ),
-          CustomTextField(
-            helperText: "Fullname",
-            hintText: "Enter Fullname",
-            onChanged: (value) {
-              _fullName = value;
-            },
-            obscureText: false,
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: _fullName,
+              decoration: InputDecoration(hintText: "Fullname"),
+            ),
           ),
-          CustomTextField(
-            helperText: "Email",
-            hintText: "Enter email address",
-            onChanged: (value) {
-              _email = value;
-            },
-            obscureText: false,
+          TextFormField(
+            controller: _email,
+            decoration: InputDecoration(hintText: "Email"),
           ),
-          CustomTextField(
-            helperText: "Password",
-            hintText: "Enter password",
-            onChanged: (value) {
-              _password = value;
-            },
-            obscureText: true,
+          TextFormField(
+            controller: _password,
+            decoration: InputDecoration(hintText: "Password"),
           ),
-          CustomTextField(
-            helperText: "Contact",
-            hintText: "Enter phone number",
-            onChanged: (value) {
-              _contact = value;
-            },
-            obscureText: false,
+          TextFormField(
+            controller: _contact,
+            decoration: InputDecoration(hintText: "Contact"),
           ),
-          CustomTextField(
-            helperText: "Address",
-            hintText: "Enter address",
-            onChanged: (value) {
-              _address = value;
-            },
-            obscureText: false,
+          TextFormField(
+            controller: _address,
+            decoration: InputDecoration(hintText: "Address"),
           ),
-          CustomTextField(
-            helperText: "Age",
-            hintText: "Enter age",
-            onChanged: (value) {
-              _age = value;
-            },
-            obscureText: false,
+          TextFormField(
+            controller: _age,
+            decoration: InputDecoration(hintText: "Age"),
           ),
           Container(
             width: MediaQuery.of(context).size.width,

@@ -28,14 +28,18 @@ class _LandingScreenState extends State<LandingScreen> {
           return StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, streamSnapshot) {
-                if (streamSnapshot.connectionState != ConnectionState.active) {
-                  return CheckUserRole();
-                }
-                final user = streamSnapshot.data;
-                if (user != null) {
+                if (streamSnapshot.connectionState == ConnectionState.active) {
+                  final user = streamSnapshot.data;
+                  if (user == null) {
+                    return LoginScreen();
+                  }
                   return CheckUserRole();
                 } else {
-                  return LoginScreen();
+                  return Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 }
               });
         }

@@ -33,8 +33,8 @@ class RegisterScreen extends StatelessWidget {
                   "role": "doctor",
                   "specification": "",
                   "description": "",
-                  "likes": 0,
-                  "rating": 0,
+                  "likes": "0",
+                  "rating": "0",
                   "images": "",
                   "registeredDate": _registerDate,
                   "joinedDate": DateTime.now()
