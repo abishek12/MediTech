@@ -35,7 +35,7 @@ class _VaccineScreenState extends State<VaccineScreen> {
                       leading: Image.asset("assets/icons/vaccine.png"),
                       title: Text(data['name']),
                       subtitle: Text(
-                        "Total: " + data['total'] + "  Dose: " + data['dose'],
+                        "Dose: ${data['dose']}",
                       ),
                       trailing: IconButton(
                         onPressed: () {

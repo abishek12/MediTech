@@ -64,9 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     margin: EdgeInsets.all(16.0),
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                       decoration: InputDecoration(
                         hintText: "Email",
+                        labelText: "Email",
+                        border: OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -74,7 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     margin: EdgeInsets.all(16.0),
                     child: TextFormField(
                       controller: _passwordController,
-                      decoration: InputDecoration(hintText: "Password"),
+                      decoration: InputDecoration(
+                        hintText: "Password",
+                        labelText: "Password",
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -92,44 +99,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            // Text("Create account as"),
-            // SizedBox(
-            //   height: 16.0,
-            // ),
-            // Container(
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       GestureDetector(
-            //         onTap: () =>
-            //             Navigator.pushNamed(context, "/registerDoctor"),
-            //         child: Container(
-            //           padding: EdgeInsets.all(16.0),
-            //           decoration: BoxDecoration(
-            //             color: Colors.white,
-            //             borderRadius: BorderRadius.circular(20.0),
-            //           ),
-            //           child: Image.asset("assets/icons/doctor.png"),
-            //         ),
-            //       ),
-            //       SizedBox(
-            //         width: 16.0,
-            //       ),
-            //       GestureDetector(
-            //         onTap: () =>
-            //             Navigator.pushNamed(context, "/registerPatient"),
-            //         child: Container(
-            //           padding: EdgeInsets.all(16.0),
-            //           decoration: BoxDecoration(
-            //             color: Colors.white,
-            //             borderRadius: BorderRadius.circular(20.0),
-            //           ),
-            //           child: Image.asset("assets/icons/patient.png"),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // )
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, "/registerPatient"),
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Image.asset("assets/icons/patient.png"),
+              ),
+            ),
           ],
         ),
       ),

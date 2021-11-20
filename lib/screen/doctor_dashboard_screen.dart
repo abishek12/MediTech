@@ -7,7 +7,7 @@ import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
 // ignore: must_be_immutable
-class DashboardScreen extends StatelessWidget {
+class DoctorDashboardScreen extends StatelessWidget {
   String _userId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
@@ -36,12 +36,11 @@ class DashboardScreen extends StatelessWidget {
 
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
+            snapshot.data!.data() as Map<String, dynamic>;
             return Scaffold(
               appBar: myAppBar("Dashboard"),
-              drawer: MyDrawer(),
               floatingActionButton: FloatingActionButton(
-                onPressed: () => Navigator.pushNamed(context, "/editProfile"),
+                onPressed: () {},
                 child: Icon(
                   CupertinoIcons.pen,
                 ),
@@ -73,6 +72,29 @@ class DashboardScreen extends StatelessWidget {
                           SizedBox(
                             height: 8.0,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Text("Like"),
+                                  Text(
+                                      data["likes"] == 0 ? "0" : data["likes"]),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 16.0,
+                              ),
+                              Column(
+                                children: [
+                                  Text("Rating"),
+                                  Text(data["rating"] == 0
+                                      ? "0"
+                                      : data["rating"]),
+                                ],
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 16.0,
                           ),
@@ -95,7 +117,7 @@ class DashboardScreen extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(left: 16.0),
                       child: Text(
-                        "Activity",
+                        "Description",
                         style: MyStyles.headingFour,
                       ),
                     ),

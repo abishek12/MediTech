@@ -35,6 +35,8 @@ dependencies:
   double_back_to_close_app: ^2.0.1
   flutter_rating_bar: ^4.0.0
   select_form_field: ^2.2.0
+  image_picker: ^0.8.4+4
+  firebase_storage: ^10.1.0
 
 dev_dependencies:
   flutter_test:

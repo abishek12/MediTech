@@ -49,6 +49,7 @@ class DoctorScreen extends StatelessWidget {
                           onPressed: () =>
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => DoctorProfileScreen(
+                                        docId: snapshot.data!.docs[i].id,
                                         fullName: data['fullName'],
                                         email: data['email'],
                                         likes: data['likes'],

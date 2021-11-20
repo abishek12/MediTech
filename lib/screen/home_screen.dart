@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medicalapp/constants/styles.dart';
+import 'package:medicalapp/screen/dashboard_screen.dart';
 import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_carousel.dart';
@@ -55,7 +56,6 @@ class DoctorHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar("Doctor (Home)"),
-      drawer: MyDrawer(),
       body: DoubleBackToCloseApp(
         snackBar: SnackBar(
           content: Text('Tap back again to logout'),
@@ -110,6 +110,32 @@ class DoctorHomeScreen extends StatelessWidget {
                           imageDescription: "First Image",
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                //profile
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, "/doctorDashboard"),
+                  child: Container(
+                    margin: EdgeInsets.all(16.0),
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(CupertinoIcons.square_grid_4x3_fill),
+                        title: Text("Profile"),
+                      ),
+                    ),
+                  ),
+                ),
+              //chat
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, "/chat"),
+                  child: Container(
+                    margin: EdgeInsets.all(16.0),
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(CupertinoIcons.chat_bubble_2),
+                        title: Text("Chat"),
+                      ),
                     ),
                   ),
                 ),

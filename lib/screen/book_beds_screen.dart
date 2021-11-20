@@ -29,19 +29,59 @@ class _BookHospitalScreenState extends State<BookHospitalScreen> {
   static int _remainingData = 0;
 
   _bookHospitalButton() {
-    String _userId = FirebaseAuth.instance.currentUser!.uid.toString();
-    CollectionReference _bookBed =
-        FirebaseFirestore.instance.collection("bookBed");
-    return _bookBed.doc(_userId).set({
-      "userId": _userId,
-      "ward": widget.hospitalName,
-      "contact": widget.hospitalContact,
-      "totalBed": _remainingData,
-    }).then((value) =>
-        FirebaseFirestore.instance.collection("ward").doc(widget.id).update({
-          "availableBeds":
-              int.parse(widget.hospitalRemainingBeds) - _remainingData,
-        }));
+    FirebaseFirestore.instance
+        .collection('bookBed')
+        .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        return showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text("Error"),
+                content: Text("You have already booked a hospital bed"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("Close"),
+                  ),
+                ],
+              );
+            });
+      } else {
+        int f = int.parse(widget.hospitalRemainingBeds) - _remainingData;
+        String _userId = FirebaseAuth.instance.currentUser!.uid.toString();
+        CollectionReference _bookBed =
+            FirebaseFirestore.instance.collection("bookBed");
+        return _bookBed.doc(_userId).set({
+          "userId": _userId,
+          "ward": widget.hospitalName,
+          "contact": widget.hospitalContact,
+          "totalBed": _remainingData,
+        }).then((value) {
+          FirebaseFirestore.instance.collection("ward").doc(widget.id).update({
+            "availableBeds": "$f",
+          });
+          return showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text("Success"),
+                  content: Text("You name bed has been booked"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("Close"),
+                    ),
+                  ],
+                );
+              });
+        });
+      }
+    });
   }
 
   @override

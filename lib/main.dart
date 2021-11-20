@@ -5,6 +5,8 @@ import 'package:medicalapp/screen/appointment.dart';
 import 'package:medicalapp/screen/beds.dart';
 import 'package:medicalapp/screen/chat_screen.dart';
 import 'package:medicalapp/screen/dashboard_screen.dart';
+import 'package:medicalapp/screen/doctor_dashboard_screen.dart';
+import 'package:medicalapp/screen/doctor_profile_edit_screen.dart';
 import 'package:medicalapp/screen/doctors_screen.dart';
 import 'package:medicalapp/screen/home_screen.dart';
 import 'package:medicalapp/screen/hospital_screen.dart';
@@ -12,6 +14,7 @@ import 'package:medicalapp/screen/lab_payment_screen.dart';
 import 'package:medicalapp/screen/lab_screen.dart';
 import 'package:medicalapp/screen/landing_screen.dart';
 import 'package:medicalapp/screen/login_screen.dart';
+import 'package:medicalapp/screen/profile_edit_screen.dart';
 import 'package:medicalapp/screen/register_patient.dart';
 import 'package:medicalapp/screen/register_screen.dart';
 import 'package:medicalapp/screen/vaccine.dart';
@@ -48,6 +51,9 @@ class _MyAppState extends State<MyApp> {
           MyRoutes.doctorScreen: (context) => DoctorScreen(),
           MyRoutes.bedScreen: (context) => BedScreen(),
           MyRoutes.dashboardScreen: (context) => DashboardScreen(),
+          MyRoutes.doctorDashboardScreen: (context) => DoctorDashboardScreen(),
+          MyRoutes.editProfileScreen: (context) => ProfileEditScreen(),
+          MyRoutes.editDoctorProfileScreen: (context) => DoctorProfileEditScreen(),
           MyRoutes.labScreen: (context) => LabScreen(),
           MyRoutes.settingsScreen: (context) => SettingsScreen(),
           MyRoutes.labPaymentScreen: (context) => LabPaymentScreen(),

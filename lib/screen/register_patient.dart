@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
-import 'package:medicalapp/widgets/custom_text.dart';
 
 class RegisterPatientScreen extends StatefulWidget {
   @override
@@ -58,7 +57,7 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
             child: Container(
               margin: EdgeInsets.only(top: 64.0),
               child: Text(
-                "Register a Patient",
+                "Register a new user",
                 style: MyStyles.heading,
               ),
             ),
@@ -67,28 +66,67 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
             margin: EdgeInsets.all(16.0),
             child: TextFormField(
               controller: _fullName,
-              decoration: InputDecoration(hintText: "Fullname"),
+              decoration: InputDecoration(
+                hintText: "Fullname",
+                labelText: "Fullname",
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
-          TextFormField(
-            controller: _email,
-            decoration: InputDecoration(hintText: "Email"),
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: _email,
+              decoration: InputDecoration(
+                hintText: "Email",
+                labelText: "Email",
+                border: OutlineInputBorder(),
+              ),
+            ),
           ),
-          TextFormField(
-            controller: _password,
-            decoration: InputDecoration(hintText: "Password"),
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: _password,
+              decoration: InputDecoration(
+                hintText: "Password",
+                labelText: "Password",
+                border: OutlineInputBorder(),
+              ),
+            ),
           ),
-          TextFormField(
-            controller: _contact,
-            decoration: InputDecoration(hintText: "Contact"),
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: _contact,
+              decoration: InputDecoration(
+                hintText: "Contact",
+                labelText: "Contact",
+                border: OutlineInputBorder(),
+              ),
+            ),
           ),
-          TextFormField(
-            controller: _address,
-            decoration: InputDecoration(hintText: "Address"),
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: _address,
+              decoration: InputDecoration(
+                hintText: "Address",
+                labelText: "Address",
+                border: OutlineInputBorder(),
+              ),
+            ),
           ),
-          TextFormField(
-            controller: _age,
-            decoration: InputDecoration(hintText: "Age"),
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: _age,
+              decoration: InputDecoration(
+                labelText: "Age",
+                border: OutlineInputBorder(),
+                hintText: "Age",
+              ),
+            ),
           ),
           Container(
             width: MediaQuery.of(context).size.width,
@@ -97,7 +135,7 @@ class _RegisterPatientScreenState extends State<RegisterPatientScreen> {
               onPressed: () => _registerPatient(),
               child: Text("Register"),
             ),
-          )
+          ),
         ],
       ),
     );

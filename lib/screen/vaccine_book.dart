@@ -51,7 +51,7 @@ class _VaccineBookState extends State<VaccineBook> {
                     TextButton(
                       onPressed: () => Navigator.pop(context),
                       child: Text("Close"),
-                    )
+                    ),
                   ],
                 );
               });
@@ -86,17 +86,6 @@ class _VaccineBookState extends State<VaccineBook> {
         }
       });
     }
-
-    List<String> timetable = [
-      '10:00 - 11:00 A.M',
-      '11:00 - 12:00 P.M',
-      '12:00 - 01:00 P.M',
-      '01:00 - 02:00 P.M',
-      '02:00 - 03:00 P.M',
-      '03:00 - 04:00 P.M',
-      '04:00 - 05:00 P.M',
-    ];
-
     final List<Map<String, dynamic>> _timetable = [
       {
         'value': '10:00 - 11:00 A.M',
@@ -214,7 +203,7 @@ class _VaccineBookState extends State<VaccineBook> {
                   onPressed: () {
                     showDatePicker(
                       context: context,
-                      initialDate: DateTime(2020, 11, 17),
+                      initialDate: DateTime.now(),
                       firstDate: DateTime(2017, 1),
                       lastDate: DateTime(2022, 7),
                       helpText: 'Select a date',
