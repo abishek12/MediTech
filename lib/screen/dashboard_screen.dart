@@ -55,28 +55,31 @@ class DashboardScreen extends StatelessWidget {
                       height: 200,
                       color: Colors.red,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
                             height: 48.0,
                           ),
                           Text(
-                            data['fullName'],
+                            "Fullname: ${data['fullName']}",
                             style: MyStyles.headingFour,
                           ),
                           SizedBox(
                             height: 8.0,
                           ),
                           Text(
-                            data['email'],
+                            "Email: ${data['email']}",
                             style: MyStyles.paragraph,
                           ),
                           SizedBox(
                             height: 8.0,
                           ),
-                          SizedBox(
-                            height: 16.0,
+                          Text(
+                            "Age:  ${data['age']}",
+                            style: MyStyles.paragraph,
                           ),
                           Container(
+                            margin: EdgeInsets.all(8.0),
                             child: ElevatedButton(
                               onPressed: () {
                                 FirebaseAuth.instance.signOut();
@@ -98,6 +101,11 @@ class DashboardScreen extends StatelessWidget {
                         "Activity",
                         style: MyStyles.headingFour,
                       ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                      },
+                      child: Text("Beds"),
                     ),
                     Container(
                       width: 200.0,

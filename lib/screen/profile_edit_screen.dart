@@ -118,7 +118,8 @@ class ProfileEditScreen extends StatelessWidget {
                             "contact": _contact,
                             "address": _address,
                             "age": _age,
-                          })
+                          }),
+                          Navigator.pushNamed(context, "/dashboard"),
                         },
                         child: Text("Update Profile"),
                       ),
