@@ -78,6 +78,7 @@ class LoginScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       onPressed: () {
+                        print("login");
                         _loginUser();
                       },
                       child: Text("Login"),
