@@ -37,6 +37,8 @@ dependencies:
   select_form_field: ^2.2.0
   image_picker: ^0.8.4+4
   firebase_storage: ^10.1.0
+  mailer: ^5.0.2
+  khalti_flutter: ^1.0.1
 
 dev_dependencies:
   flutter_test:

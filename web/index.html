@@ -27,6 +27,21 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyC68oxKpkL13xcIzFX75t96_BwuLDna5Z0",
+    authDomain: "medicalapp-e2bbe.firebaseapp.com",
+    projectId: "medicalapp-e2bbe",
+    storageBucket: "medicalapp-e2bbe.appspot.com",
+    messagingSenderId: "1089237460744",
+    appId: "1:1089237460744:web:94c3e52ec211d1a77f2ebd"
+  };
+  const app = initializeApp(firebaseConfig);
+</script>
+
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->

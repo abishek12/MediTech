@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
+import 'package:medicalapp/widgets/patient_beds.dart';
 
 // ignore: must_be_immutable
 class DashboardScreen extends StatelessWidget {
@@ -13,7 +14,6 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('user');
-
     return FutureBuilder<DocumentSnapshot>(
         future: users.doc(_userId).get(),
         builder:
@@ -102,17 +102,20 @@ class DashboardScreen extends StatelessWidget {
                         style: MyStyles.headingFour,
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                      },
-                      child: Text("Beds"),
-                    ),
                     Container(
                       width: 200.0,
                       height: 10.0,
                       margin: EdgeInsets.only(left: 16.0, top: 4.0),
                       decoration: BoxDecoration(
                         color: Colors.red,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: 16.0, left: 16.0, right: 16.0, bottom: 8.0),
+                      child: Text(
+                        "Beds: ",
+                        style: MyStyles.paragraph,
                       ),
                     ),
                   ],
