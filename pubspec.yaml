@@ -39,6 +39,7 @@ dependencies:
   firebase_storage: ^10.1.0
   mailer: ^5.0.2
   khalti_flutter: ^1.0.1
+  url_launcher: ^6.0.15
 
 dev_dependencies:
   flutter_test:

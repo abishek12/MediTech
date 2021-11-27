@@ -3,14 +3,13 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:medicalapp/constants/styles.dart';
-import 'package:medicalapp/screen/dashboard_screen.dart';
 import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_carousel.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 import 'package:medicalapp/widgets/doctor_carousel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CheckUserRole extends StatelessWidget {
   @override
@@ -126,7 +125,7 @@ class DoctorHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              //chat
+                //chat
                 GestureDetector(
                   onTap: () => Navigator.pushNamed(context, "/chat"),
                   child: Container(
@@ -151,6 +150,11 @@ class DoctorHomeScreen extends StatelessWidget {
 class PatientHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String? encodeQueryParameters(Map<String, String> params) {
+      return params.entries
+          .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+          .join('&');
+    }
     return Scaffold(
       appBar: myAppBar("Home"),
       drawer: MyDrawer(),
@@ -371,14 +375,14 @@ class PatientHomeScreen extends StatelessWidget {
                                                 Text("+977 9860162323"),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Clipboard.setData(
-                                                        ClipboardData(
-                                                            text:
-                                                                "9860162323"));
+                                                    launch(Uri(
+                                                      scheme: 'tel',
+                                                      path: "9860162323",
+                                                    ).toString());
                                                   },
                                                   child: Container(
-                                                    child: Icon(CupertinoIcons
-                                                        .square_on_square),
+                                                    child: Icon(
+                                                        CupertinoIcons.phone),
                                                   ),
                                                 ),
                                               ],
@@ -401,17 +405,21 @@ class PatientHomeScreen extends StatelessWidget {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text("support@abishek.com"),
+                                                Text(
+                                                    "abishekkhanal2056@gmail.com"),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    Clipboard.setData(ClipboardData(
-                                                        text:
-                                                            "support@abishek.com"));
+                                                    launch(Uri(
+                                                      scheme: 'mailto',
+                                                      path: 'abishekkhanal2056@gmail.com',
+                                                      query: encodeQueryParameters(<String, String>{
+                                                        'subject': 'Contact Us Section'
+                                                      }),
+                                                    ).toString());
                                                   },
                                                   child: Container(
                                                     child: Icon(
-                                                      CupertinoIcons
-                                                          .square_on_square,
+                                                      CupertinoIcons.mail,
                                                     ),
                                                   ),
                                                 ),

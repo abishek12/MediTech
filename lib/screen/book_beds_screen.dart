@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
@@ -28,8 +30,8 @@ class BookHospitalScreen extends StatefulWidget {
 class _BookHospitalScreenState extends State<BookHospitalScreen> {
   static int _remainingData = 0;
 
-  _bookHospitalButton() {
-    FirebaseFirestore.instance
+  _bookHospitalButton() async{
+   await FirebaseFirestore.instance
         .collection('bookBed')
         .doc(FirebaseAuth.instance.currentUser!.uid.toString())
         .get()
@@ -82,6 +84,28 @@ class _BookHospitalScreenState extends State<BookHospitalScreen> {
         });
       }
     });
+   await _sendMail();
+  }
+
+  _sendMail() async{
+    String username = 'abishekkhanal2056@gmail.com';
+    String password = '@b!\$hek@kh@n@l2323';
+    final smtpServer = gmail(username, password);
+    final message = Message()
+      ..from = Address(username, 'MediTech Application')
+      ..recipients.add('sulupoudel.spp@gmail.com')
+      ..subject = 'Your name hospital bed has been booked ${DateTime.now()}'
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
   }
 
   @override
