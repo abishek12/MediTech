@@ -19,6 +19,7 @@ import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/screen/profile_edit_screen.dart';
 import 'package:medicalapp/screen/register_patient.dart';
 import 'package:medicalapp/screen/register_screen.dart';
+import 'package:medicalapp/screen/search_screen.dart';
 import 'package:medicalapp/screen/vaccine.dart';
 import 'package:medicalapp/screen/settings.dart';
 
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
             MyRoutes.vaccineScreen: (context) => VaccineScreen(),
             MyRoutes.hospitalScreen: (context) => HospitalScreen(),
             MyRoutes.appointmentScreen: (context) => AppointmentScreen(),
+            MyRoutes.searchScreen: (context) => SearchScreen(),
           });
     });
   }

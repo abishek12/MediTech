@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
-import 'package:medicalapp/widgets/patient_beds.dart';
 
 // ignore: must_be_immutable
 class DashboardScreen extends StatelessWidget {
@@ -111,12 +110,37 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(
-                          top: 16.0, left: 16.0, right: 16.0, bottom: 8.0),
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 12.0),
+                      child: Text(
+                        "Vaccine: ",
+                        style: MyStyles.paragraph,
+                      ),
+                    ),
+                    GetUerVaccine(
+                      FirebaseAuth.instance.currentUser!.uid.toString(),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 12.0),
                       child: Text(
                         "Beds: ",
                         style: MyStyles.paragraph,
                       ),
+                    ),
+                    GetUerBed(
+                      FirebaseAuth.instance.currentUser!.uid.toString(),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 12.0),
+                      child: Text(
+                        "Appointment: ",
+                        style: MyStyles.paragraph,
+                      ),
+                    ),
+                    GetUerAppointment(
+                      FirebaseAuth.instance.currentUser!.uid.toString(),
                     ),
                   ],
                 ),
@@ -130,5 +154,161 @@ class DashboardScreen extends StatelessWidget {
             ),
           );
         });
+  }
+}
+
+class GetUerBed extends StatelessWidget {
+  final String documentId;
+
+  GetUerBed(this.documentId);
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('bookBed');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: ListTile(
+              title: Text(
+                "Ward Name: ${data["ward"]}",
+                style: MyStyles.paragraph,
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  print("Delete");
+                },
+                icon: Icon(CupertinoIcons.delete),
+              ),
+            ),
+          );
+        }
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Card(
+            child: Text("Nothing TO Display"),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class GetUerAppointment extends StatelessWidget {
+  final String documentId;
+
+  GetUerAppointment(this.documentId);
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('bookAppointment');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: ListTile(
+              title: Text(
+                "Doctor Name: ${data["doctor_name"]}",
+                style: MyStyles.paragraph,
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  print("Delete");
+                },
+                icon: Icon(CupertinoIcons.delete),
+              ),
+            ),
+          );
+        }
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Card(
+            child: Text("Nothing TO Display"),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class GetUerVaccine extends StatelessWidget {
+  final String documentId;
+
+  GetUerVaccine(this.documentId);
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('bookVaccine');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: ListTile(
+              title: Text(
+                "Vaccine Name: ${data["vaccine_name"]}",
+                style: MyStyles.paragraph,
+              ),
+              trailing: IconButton(
+                onPressed: () {
+                  print("Delete");
+                },
+                icon: Icon(CupertinoIcons.delete),
+              ),
+            ),
+          );
+        }
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Card(
+            child: Text("Nothing TO Display"),
+          ),
+        );
+      },
+    );
   }
 }
