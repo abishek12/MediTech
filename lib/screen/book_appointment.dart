@@ -26,6 +26,7 @@ class BookAppointment extends StatefulWidget {
 
 class _BookAppointmentState extends State<BookAppointment> {
   DateTime? _dateTime;
+
   @override
   Widget build(BuildContext context) {
     _bookAppointment() {

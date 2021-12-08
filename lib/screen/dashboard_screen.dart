@@ -167,10 +167,32 @@ class GetUerBed extends StatelessWidget {
     CollectionReference users =
         FirebaseFirestore.instance.collection('bookBed');
 
+    _deleteBeds(String documentId) async {
+      await FirebaseFirestore.instance
+          .collection('bookBed')
+          .doc(documentId)
+          .delete();
+      Navigator.pop(context);
+    }
+
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Card(
+              child: Text("Nothing to Display"),
+            ),
+          );
+        }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
@@ -179,6 +201,7 @@ class GetUerBed extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
               color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
             ),
             child: ListTile(
               title: Text(
@@ -186,9 +209,10 @@ class GetUerBed extends StatelessWidget {
                 style: MyStyles.paragraph,
               ),
               trailing: IconButton(
-                onPressed: () {
-                  print("Delete");
-                },
+                  onPressed: () {
+                    _deleteBeds(
+                        FirebaseAuth.instance.currentUser!.uid.toString());
+                  },
                 icon: Icon(CupertinoIcons.delete),
               ),
             ),
@@ -219,10 +243,32 @@ class GetUerAppointment extends StatelessWidget {
     CollectionReference users =
         FirebaseFirestore.instance.collection('bookAppointment');
 
+    _deleteAppointment(String documentId) async {
+      await FirebaseFirestore.instance
+          .collection('bookAppointment')
+          .doc(documentId)
+          .delete();
+      Navigator.pop(context);
+    }
+
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Card(
+              child: Text("Nothing TO Display"),
+            ),
+          );
+        }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
@@ -230,6 +276,7 @@ class GetUerAppointment extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
               color: Colors.white,
             ),
             child: ListTile(
@@ -239,7 +286,8 @@ class GetUerAppointment extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  print("Delete");
+                  _deleteAppointment(
+                      FirebaseAuth.instance.currentUser!.uid.toString());
                 },
                 icon: Icon(CupertinoIcons.delete),
               ),
@@ -251,6 +299,7 @@ class GetUerAppointment extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 16.0),
           decoration: BoxDecoration(
             color: Colors.white,
+            borderRadius: BorderRadius.circular(12.0),
           ),
           child: Card(
             child: Text("Nothing TO Display"),
@@ -271,10 +320,32 @@ class GetUerVaccine extends StatelessWidget {
     CollectionReference users =
         FirebaseFirestore.instance.collection('bookVaccine');
 
+    _deleteVaccine(String documentId) async {
+      await FirebaseFirestore.instance
+          .collection('bookVaccine')
+          .doc(documentId)
+          .delete();
+      Navigator.pop(context);
+    }
+
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasData && !snapshot.data!.exists) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Card(
+                  child: Text("Nothing to Display"),
+                ),
+              );
+            }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
@@ -283,6 +354,7 @@ class GetUerVaccine extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
               color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
             ),
             child: ListTile(
               title: Text(
@@ -291,7 +363,8 @@ class GetUerVaccine extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  print("Delete");
+                  _deleteVaccine(
+                      FirebaseAuth.instance.currentUser!.uid.toString());
                 },
                 icon: Icon(CupertinoIcons.delete),
               ),

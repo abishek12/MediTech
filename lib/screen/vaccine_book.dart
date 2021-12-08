@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
-import 'package:medicalapp/screen/vaccine.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 import 'package:select_form_field/select_form_field.dart';
+import 'package:telephony/telephony.dart';
+final Telephony telephony = Telephony.instance;
 
 class VaccineBook extends StatefulWidget {
   String docId = "";
@@ -30,6 +31,7 @@ class VaccineBook extends StatefulWidget {
 
 class _VaccineBookState extends State<VaccineBook> {
   DateTime? _dateTime;
+  TextEditingController _patientContact = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,10 @@ class _VaccineBookState extends State<VaccineBook> {
                 );
               });
         } else {
+          telephony.sendSms(
+              to: _patientContact.text,
+              message: "Your Appointment Has Been Booked. Date: ${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day} Time:  ${widget.times}"
+          );
           CollectionReference _bookVaccine =
               FirebaseFirestore.instance.collection('bookVaccine');
           _bookVaccine.doc(FirebaseAuth.instance.currentUser!.uid).set({
@@ -63,6 +69,7 @@ class _VaccineBookState extends State<VaccineBook> {
             'vaccine_dose': widget.vDose,
             'vaccine_contact': widget.vContact,
             'patient_name': widget.patientName,
+            'contact': _patientContact.text,
             'booked_date':
                 "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
             'booked_time': widget.times,
@@ -179,6 +186,18 @@ class _VaccineBookState extends State<VaccineBook> {
               initialValue: "${widget.patientName}",
               decoration: InputDecoration(
                 labelText: "Patient Name",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          // patient contact
+          Container(
+            margin: EdgeInsets.all(16.0),
+            child: TextFormField(
+              controller: _patientContact,
+              decoration: InputDecoration(
+                labelText: "Contact",
+                hintText: "Contact",
                 border: OutlineInputBorder(),
               ),
             ),

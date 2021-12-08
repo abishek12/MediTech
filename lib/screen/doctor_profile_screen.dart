@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:medicalapp/screen/book_appointment.dart';
+import 'package:medicalapp/screen/feedback_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
@@ -12,7 +10,7 @@ class DoctorProfileScreen extends StatefulWidget {
   final String fullName;
   final String email;
   final String likes;
-  final String rating;
+  final int rating;
   final String address;
   final String contact;
   final String licensesNumber;
@@ -106,9 +104,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         SizedBox(
                           width: 16.0,
                         ),
-                        Text(
-                          "${widget.rating}" == "" ? "0" : widget.rating,
-                        ),
+                        Text("${widget.rating}"),
                       ],
                     ),
                   ],
@@ -234,36 +230,6 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 ],
               ),
             ),
-
-            Container(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  Text("Make a Rating"),
-                  RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.blueAccent,
-                    ),
-                    onRatingUpdate: (rating) {
-                      FirebaseFirestore.instance
-                          .collection("users")
-                          .doc(FirebaseAuth.instance.currentUser!.uid)
-                          .update({
-                        "rating": "$rating",
-                      });
-                      print(rating);
-                    },
-                  )
-                ],
-              ),
-            ),
             Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.all(16.0),
@@ -282,6 +248,20 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   );
                 },
                 child: Text("Make an Appointment"),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FeedBackScreen(docID: widget.docId),
+                    ),
+                  );
+                },
+                child: Text("Feedback"),
               ),
             ),
           ],
