@@ -23,7 +23,7 @@ class DoctorScreen extends StatelessWidget {
             appBar: myAppBar("Doctor"),
             drawer: MyDrawer(),
             body: ListView.builder(
-              itemCount: docs.length,
+              itemCount: snapshot.data!.docs.length,
               itemBuilder: (_, i) {
                 final data = docs[i].data();
                 return Container(

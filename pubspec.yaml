@@ -42,6 +42,7 @@ dependencies:
   mailer: ^5.0.2
   flutter_local_notifications: ^9.1.4
   telephony: ^0.1.4
+  stream_chat_flutter_core: ^3.3.1
 
 dev_dependencies:
   flutter_test:

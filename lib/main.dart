@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +7,7 @@ import 'package:medicalapp/constants/colors.dart';
 import 'package:medicalapp/constants/routes.dart';
 import 'package:medicalapp/screen/appointment.dart';
 import 'package:medicalapp/screen/beds.dart';
-import 'package:medicalapp/screen/chat_screen.dart';
+import 'package:medicalapp/screen/chat.dart';
 import 'package:medicalapp/screen/dashboard_screen.dart';
 import 'package:medicalapp/screen/doctor_dashboard_screen.dart';
 import 'package:medicalapp/screen/doctor_profile_edit_screen.dart';
@@ -30,7 +28,7 @@ import 'package:medicalapp/screen/settings.dart';
 import 'constants/const.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,45 +45,49 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    return KhaltiScope(publicKey: KHALTI_API, builder: (context, navKey){
-      return MaterialApp(
-          navigatorKey: navKey,
-          localizationsDelegates: const [
-            KhaltiLocalizations.delegate,
-          ],
-          debugShowCheckedModeBanner: false,
-          initialRoute: MyRoutes.landingScreen,
-          theme: ThemeData(
-            scaffoldBackgroundColor: Color(MyColor.backgroundColor),
-          ),
-          routes: {
-            MyRoutes.landingScreen: (context) => LandingScreen(),
-            MyRoutes.loginScreen: (context) => LoginScreen(),
-            MyRoutes.registerScreen: (context) => RegisterScreen(),
-            MyRoutes.registerPatientScreen: (context) => RegisterPatientScreen(),
-            MyRoutes.homeScreen: (context) => CheckUserRole(),
-            MyRoutes.chatScreen: (context) => ChatScreen(),
-            MyRoutes.doctorScreen: (context) => DoctorScreen(),
-            MyRoutes.bedScreen: (context) => BedScreen(),
-            MyRoutes.dashboardScreen: (context) => DashboardScreen(),
-            MyRoutes.doctorDashboardScreen: (context) => DoctorDashboardScreen(),
-            MyRoutes.editProfileScreen: (context) => ProfileEditScreen(),
-            MyRoutes.editDoctorProfileScreen: (context) => DoctorProfileEditScreen(),
-            MyRoutes.labScreen: (context) => LabScreen(),
-            MyRoutes.settingsScreen: (context) => SettingsScreen(),
-            MyRoutes.labPaymentScreen: (context) => LabPaymentScreen(),
-            MyRoutes.vaccineScreen: (context) => VaccineScreen(),
-            MyRoutes.hospitalScreen: (context) => HospitalScreen(),
-            MyRoutes.appointmentScreen: (context) => AppointmentScreen(),
-            MyRoutes.searchScreen: (context) => SearchScreen(),
-          });
-    });
+    return KhaltiScope(
+        publicKey: KHALTI_API,
+        builder: (context, navKey) {
+          return MaterialApp(
+              navigatorKey: navKey,
+              localizationsDelegates: const [
+                KhaltiLocalizations.delegate,
+              ],
+              debugShowCheckedModeBanner: false,
+              initialRoute: MyRoutes.landingScreen,
+              theme: ThemeData(
+                scaffoldBackgroundColor: Color(MyColor.backgroundColor),
+              ),
+              routes: {
+                MyRoutes.landingScreen: (context) => LandingScreen(),
+                MyRoutes.loginScreen: (context) => LoginScreen(),
+                MyRoutes.registerScreen: (context) => RegisterScreen(),
+                MyRoutes.registerPatientScreen: (context) =>
+                    RegisterPatientScreen(),
+                MyRoutes.homeScreen: (context) => CheckUserRole(),
+                MyRoutes.doctorScreen: (context) => DoctorScreen(),
+                MyRoutes.bedScreen: (context) => BedScreen(),
+                MyRoutes.dashboardScreen: (context) => DashboardScreen(),
+                MyRoutes.doctorDashboardScreen: (context) =>
+                    DoctorDashboardScreen(),
+                MyRoutes.editProfileScreen: (context) => ProfileEditScreen(),
+                MyRoutes.editDoctorProfileScreen: (context) =>
+                    DoctorProfileEditScreen(),
+                MyRoutes.labScreen: (context) => LabScreen(),
+                MyRoutes.settingsScreen: (context) => SettingsScreen(),
+                MyRoutes.labPaymentScreen: (context) => LabPaymentScreen(),
+                MyRoutes.vaccineScreen: (context) => VaccineScreen(),
+                MyRoutes.hospitalScreen: (context) => HospitalScreen(),
+                MyRoutes.appointmentScreen: (context) => AppointmentScreen(),
+                MyRoutes.searchScreen: (context) => Search(),
+              });
+        });
   }
 }
