@@ -30,8 +30,8 @@ class BookHospitalScreen extends StatefulWidget {
 class _BookHospitalScreenState extends State<BookHospitalScreen> {
   static int _remainingData = 0;
 
-  _bookHospitalButton() async{
-   await FirebaseFirestore.instance
+  _bookHospitalButton() async {
+    await FirebaseFirestore.instance
         .collection('bookBed')
         .doc(FirebaseAuth.instance.currentUser!.uid.toString())
         .get()
@@ -84,12 +84,13 @@ class _BookHospitalScreenState extends State<BookHospitalScreen> {
         });
       }
     });
-   await _sendMail();
+    await _sendMail();
   }
 
-  _sendMail() async{
+  _sendMail() async {
     String username = 'abishekkhanal2056@gmail.com';
     String password = '@b!\$hek@kh@n@l2323';
+    // ignore: deprecated_member_use
     final smtpServer = gmail(username, password);
     final message = Message()
       ..from = Address(username, 'MediTech Application')

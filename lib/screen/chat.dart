@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/const.dart';
 import 'package:medicalapp/constants/database.dart';
@@ -16,6 +18,28 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   late Stream<QuerySnapshot<Map<String, dynamic>>> chats;
   TextEditingController messageEditingController = new TextEditingController();
+  @override
+  void initState() {
+    _getUserName();
+    DatabaseMethods().getChats(widget.chatRoomId).then((val) {
+      setState(() {
+        chats = val;
+      });
+    });
+    super.initState();
+  }
+
+  _getUserName() {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc((FirebaseAuth.instance.currentUser!).uid)
+        .get()
+        .then((value) {
+      setState(() {
+        Constants.myName = value.get(FieldPath(['fullName']));
+      });
+    });
+  }
 
   Widget chatMessages() {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -50,16 +74,6 @@ class _ChatState extends State<Chat> {
         messageEditingController.text = "";
       });
     }
-  }
-
-  @override
-  void initState() {
-    DatabaseMethods().getChats(widget.chatRoomId).then((val) {
-      setState(() {
-        chats = val;
-      });
-    });
-    super.initState();
   }
 
   @override
@@ -109,11 +123,7 @@ class _ChatState extends State<Chat> {
                                   end: FractionalOffset.bottomRight),
                               borderRadius: BorderRadius.circular(40)),
                           padding: EdgeInsets.all(12),
-                          child: Image.asset(
-                            "assets/images/send.png",
-                            height: 25,
-                            width: 25,
-                          )),
+                          child: Icon(CupertinoIcons.arrow_right)),
                     ),
                   ],
                 ),

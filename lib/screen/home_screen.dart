@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
+import 'package:medicalapp/screen/chatrooms.dart';
 import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_carousel.dart';
@@ -127,7 +128,8 @@ class DoctorHomeScreen extends StatelessWidget {
                 ),
                 //chat
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, "/chat"),
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChatRoom())),
                   child: Container(
                     margin: EdgeInsets.all(16.0),
                     child: Card(
@@ -152,9 +154,11 @@ class PatientHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String? encodeQueryParameters(Map<String, String> params) {
       return params.entries
-          .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+          .map((e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
           .join('&');
     }
+
     return Scaffold(
       appBar: myAppBar("Home"),
       drawer: MyDrawer(),
@@ -411,9 +415,13 @@ class PatientHomeScreen extends StatelessWidget {
                                                   onTap: () {
                                                     launch(Uri(
                                                       scheme: 'mailto',
-                                                      path: 'abishekkhanal2056@gmail.com',
-                                                      query: encodeQueryParameters(<String, String>{
-                                                        'subject': 'Contact Us Section'
+                                                      path:
+                                                          'abishekkhanal2056@gmail.com',
+                                                      query:
+                                                          encodeQueryParameters(<
+                                                              String, String>{
+                                                        'subject':
+                                                            'Contact Us Section'
                                                       }),
                                                     ).toString());
                                                   },

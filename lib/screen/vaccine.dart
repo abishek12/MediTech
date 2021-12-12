@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:medicalapp/screen/nearby.dart';
 import 'package:medicalapp/screen/seeall.dart';
-
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
@@ -58,8 +55,8 @@ class _VaccineScreenState extends State<VaccineScreen> {
               padding: EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => SeeAll()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SeeAll()));
                 },
                 child: Text("See All"),
               ),

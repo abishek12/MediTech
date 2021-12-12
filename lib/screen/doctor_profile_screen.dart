@@ -9,7 +9,6 @@ class DoctorProfileScreen extends StatefulWidget {
   final String docId;
   final String fullName;
   final String email;
-  final String likes;
   final int rating;
   final String address;
   final String contact;
@@ -20,7 +19,6 @@ class DoctorProfileScreen extends StatefulWidget {
       {required this.docId,
       required this.fullName,
       required this.email,
-      required this.likes,
       required this.rating,
       required this.address,
       required this.contact,

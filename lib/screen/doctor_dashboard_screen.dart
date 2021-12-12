@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
-import 'package:medicalapp/widgets/custom_drawer.dart';
 
 // ignore: must_be_immutable
 class DoctorDashboardScreen extends StatelessWidget {
@@ -36,7 +35,7 @@ class DoctorDashboardScreen extends StatelessWidget {
 
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data =
-            snapshot.data!.data() as Map<String, dynamic>;
+                snapshot.data!.data() as Map<String, dynamic>;
             return Scaffold(
               appBar: myAppBar("Dashboard"),
               floatingActionButton: FloatingActionButton(
@@ -75,16 +74,6 @@ class DoctorDashboardScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Column(
-                                children: [
-                                  Text("Like"),
-                                  Text(
-                                      data["likes"] == 0 ? "0" : data["likes"]),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 16.0,
-                              ),
                               Column(
                                 children: [
                                   Text("Rating"),

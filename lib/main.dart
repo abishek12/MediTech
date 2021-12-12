@@ -7,7 +7,6 @@ import 'package:medicalapp/constants/colors.dart';
 import 'package:medicalapp/constants/routes.dart';
 import 'package:medicalapp/screen/appointment.dart';
 import 'package:medicalapp/screen/beds.dart';
-import 'package:medicalapp/screen/chat.dart';
 import 'package:medicalapp/screen/dashboard_screen.dart';
 import 'package:medicalapp/screen/doctor_dashboard_screen.dart';
 import 'package:medicalapp/screen/doctor_profile_edit_screen.dart';

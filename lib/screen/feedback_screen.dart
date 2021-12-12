@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 
+// ignore: must_be_immutable
 class FeedBackScreen extends StatelessWidget {
   String docID;
   FeedBackScreen({required this.docID});

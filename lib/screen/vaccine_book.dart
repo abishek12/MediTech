@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +9,7 @@ import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'package:telephony/telephony.dart';
+
 final Telephony telephony = Telephony.instance;
 
 class VaccineBook extends StatefulWidget {
@@ -60,8 +63,8 @@ class _VaccineBookState extends State<VaccineBook> {
         } else {
           telephony.sendSms(
               to: _patientContact.text,
-              message: "Your Appointment Has Been Booked. Date: ${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day} Time:  ${widget.times}"
-          );
+              message:
+                  "Your Appointment Has Been Booked. Date: ${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day} Time:  ${widget.times}");
           CollectionReference _bookVaccine =
               FirebaseFirestore.instance.collection('bookVaccine');
           _bookVaccine.doc(FirebaseAuth.instance.currentUser!.uid).set({
@@ -93,6 +96,7 @@ class _VaccineBookState extends State<VaccineBook> {
         }
       });
     }
+
     final List<Map<String, dynamic>> _timetable = [
       {
         'value': '10:00 - 11:00 A.M',

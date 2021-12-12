@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/const.dart';
 import 'package:medicalapp/constants/database.dart';
@@ -12,7 +13,7 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  late Stream<QuerySnapshot<Map<String, dynamic>>> chatsRooms;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? chatsRooms;
 
   Widget chatRoomsList() {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -39,7 +40,20 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   void initState() {
     getUserInfogetChats();
+    _getUserName();
     super.initState();
+  }
+
+  _getUserName() {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc((FirebaseAuth.instance.currentUser!).uid)
+        .get()
+        .then((value) {
+      setState(() {
+        Constants.myName = value.get(FieldPath(['fullName']));
+      });
+    });
   }
 
   getUserInfogetChats() async {

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +57,6 @@ class AppointmentBasedCategory extends StatelessWidget {
                                         docId: snapshot.data!.docs[i].id,
                                         fullName: data['fullName'],
                                         email: data['email'],
-                                        likes: data['likes'],
                                         rating: data['rating'],
                                         address: data['address'],
                                         contact: data['contact'],

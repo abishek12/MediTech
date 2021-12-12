@@ -52,7 +52,6 @@ class DoctorScreen extends StatelessWidget {
                                         docId: snapshot.data!.docs[i].id,
                                         fullName: data['fullName'],
                                         email: data['email'],
-                                        likes: data['likes'],
                                         rating: data['rating'],
                                         address: data['address'],
                                         contact: data['contact'],

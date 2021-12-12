@@ -7,6 +7,7 @@ import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 import 'package:select_form_field/select_form_field.dart';
 
+// ignore: must_be_immutable
 class BookAppointment extends StatefulWidget {
   String docId = "";
   String doctorName = "";
@@ -53,14 +54,14 @@ class _BookAppointmentState extends State<BookAppointment> {
               });
         } else {
           CollectionReference _bookAppointment =
-          FirebaseFirestore.instance.collection('bookAppointment');
+              FirebaseFirestore.instance.collection('bookAppointment');
           _bookAppointment.doc(FirebaseAuth.instance.currentUser!.uid).set({
             'doctor_id': widget.docId,
             'doctor_name': widget.doctorName,
             'doctor_contact': widget.doctorContact,
             'address': widget.doctorAddress,
             'booked_date':
-            "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
+                "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
             'booked_time': widget.times,
           }).then((value) {
             return showDialog(
@@ -82,6 +83,7 @@ class _BookAppointmentState extends State<BookAppointment> {
         }
       });
     }
+
     final List<Map<String, dynamic>> _timetable = [
       {
         'value': '10:00 - 11:00 A.M',
@@ -194,7 +196,7 @@ class _BookAppointmentState extends State<BookAppointment> {
               ],
             ),
           ),
-        //  time picker
+          //  time picker
           Container(
             margin: EdgeInsets.all(16.0),
             child: SelectFormField(
@@ -210,11 +212,11 @@ class _BookAppointmentState extends State<BookAppointment> {
               },
             ),
           ),
-        //  button
+          //  button
           Container(
             child: ElevatedButton(
               child: Text("Book an Appointment"),
-              onPressed: (){
+              onPressed: () {
                 _bookAppointment();
               },
             ),
