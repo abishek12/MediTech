@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
@@ -31,8 +30,10 @@ class _LabScreenState extends State<LabScreen> {
               itemBuilder: (_, i) {
                 final data = docs[i].data();
                 final config = PaymentConfig(
-                  amount: int.parse(data['price']) * 100, // Amount should be in paisa
-                  productIdentity: i.toString(), // here pass data['id'] if there is so
+                  amount: int.parse(data['price']) *
+                      100, // Amount should be in paisa
+                  productIdentity:
+                      i.toString(), // here pass data['id'] if there is so
                   productName: data['name'],
                   // productUrl: 'https://www.khalti.com/#/bazaar',
                   additionalData: {
@@ -49,18 +50,18 @@ class _LabScreenState extends State<LabScreen> {
                       subtitle: Text(
                         data['price'],
                       ),
-                        trailing: CustomKhaltiPay(
-                          config: config,
-                          onSuccess: (PaymentSuccessModel success) {
-                            print(success.toString());
-                          },
-                          onFailure: (PaymentFailureModel failure) {
-                            print(failure.toString());
-                          },
-                          onCancel: () {
-                            print("Cancelled By User");
-                          },
-                        ),
+                      trailing: CustomKhaltiPay(
+                        config: config,
+                        onSuccess: (PaymentSuccessModel success) {
+                          print(success.toString());
+                        },
+                        onFailure: (PaymentFailureModel failure) {
+                          print(failure.toString());
+                        },
+                        onCancel: () {
+                          print("Cancelled By User");
+                        },
+                      ),
                     ),
                   ),
                 );

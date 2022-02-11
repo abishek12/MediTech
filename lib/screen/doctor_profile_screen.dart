@@ -9,7 +9,7 @@ class DoctorProfileScreen extends StatefulWidget {
   final String docId;
   final String fullName;
   final String email;
-  final int rating;
+  final double rating;
   final String address;
   final String contact;
   final String licensesNumber;
@@ -65,19 +65,6 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                       Text(widget.email),
                     ],
                   ),
-                  Column(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Like");
-                        },
-                        icon: Icon(CupertinoIcons.heart),
-                      ),
-                      SizedBox(
-                        height: 4.0,
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
@@ -102,7 +89,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         SizedBox(
                           width: 16.0,
                         ),
-                        Text("${widget.rating}"),
+                        Text(widget.rating == 0
+                            ? "0.0"
+                            : "${widget.rating}"),
                       ],
                     ),
                   ],
@@ -255,7 +244,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FeedBackScreen(docID: widget.docId),
+                      builder: (context) => FeedBackScreen(
+                          docID: widget.docId, docRating: widget.rating),
                     ),
                   );
                 },

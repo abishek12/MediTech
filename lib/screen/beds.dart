@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';

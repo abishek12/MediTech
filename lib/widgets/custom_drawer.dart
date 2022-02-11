@@ -35,12 +35,11 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("Abishek Khanal"),
             accountEmail:
                 Text(FirebaseAuth.instance.currentUser!.email.toString()),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/doctor1.jpg"),
-            ),
+              backgroundImage: AssetImage("assets/images/avatar.png"),
+            ), accountName: null,
           ),
           // home
           drawerItems(

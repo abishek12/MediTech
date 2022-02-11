@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
@@ -9,7 +8,6 @@ import 'package:medicalapp/screen/appointment.dart';
 import 'package:medicalapp/screen/beds.dart';
 import 'package:medicalapp/screen/dashboard_screen.dart';
 import 'package:medicalapp/screen/doctor_dashboard_screen.dart';
-import 'package:medicalapp/screen/doctor_profile_edit_screen.dart';
 import 'package:medicalapp/screen/doctors_screen.dart';
 import 'package:medicalapp/screen/home_screen.dart';
 import 'package:medicalapp/screen/hospital_screen.dart';
@@ -23,16 +21,14 @@ import 'package:medicalapp/screen/register_screen.dart';
 import 'package:medicalapp/screen/search_screen.dart';
 import 'package:medicalapp/screen/vaccine.dart';
 import 'package:medicalapp/screen/settings.dart';
-
 import 'constants/const.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(MyApp());
 }
 
@@ -77,8 +73,6 @@ class _MyAppState extends State<MyApp> {
                 MyRoutes.doctorDashboardScreen: (context) =>
                     DoctorDashboardScreen(),
                 MyRoutes.editProfileScreen: (context) => ProfileEditScreen(),
-                MyRoutes.editDoctorProfileScreen: (context) =>
-                    DoctorProfileEditScreen(),
                 MyRoutes.labScreen: (context) => LabScreen(),
                 MyRoutes.settingsScreen: (context) => SettingsScreen(),
                 MyRoutes.labPaymentScreen: (context) => LabPaymentScreen(),

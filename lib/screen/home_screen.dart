@@ -9,8 +9,9 @@ import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_carousel.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
-import 'package:medicalapp/widgets/doctor_carousel.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'doctor_profile_screen.dart';
 
 class CheckUserRole extends StatelessWidget {
   @override
@@ -74,43 +75,7 @@ class DoctorHomeScreen extends StatelessWidget {
                   margin: EdgeInsets.all(16.0),
                   child: SizedBox(
                     height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        CustomCarousel(
-                          imageName: "doctor1.jpg",
-                          imageDescription: "First Image",
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        CustomCarousel(
-                          imageName: "doctor2.jpg",
-                          imageDescription: "First Image",
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        CustomCarousel(
-                          imageName: "doctor3.jpg",
-                          imageDescription: "First Image",
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        CustomCarousel(
-                          imageName: "doctor1.jpg",
-                          imageDescription: "First Image",
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        CustomCarousel(
-                          imageName: "doctor2.jpg",
-                          imageDescription: "First Image",
-                        ),
-                      ],
-                    ),
+                    child: CarouselHomePage(),
                   ),
                 ),
                 //profile
@@ -171,363 +136,385 @@ class PatientHomeScreen extends StatelessWidget {
                 FirebaseAuth.instance.signOut();
               }),
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.all(16.0),
-                  child: SizedBox(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: SizedBox(height: 200, child: CarouselHomePage()),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 16.0, left: 16.0),
+                child: Text(
+                  "Choose the type of events",
+                  style: MyStyles.headingFour,
+                ),
+              ),
+              // divider
+              Container(
+                margin: EdgeInsets.all(18.0),
+                width: MediaQuery.of(context).size.width,
+                height: 5.0,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+              ),
+              // choose items first items
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // first item
+                    Column(
                       children: [
-                        CustomCarousel(
-                          imageName: "doctor1.jpg",
-                          imageDescription: "First Image",
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.pushNamed(context, "/vaccine"),
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40.0),
+                            ),
+                            child: Image.asset("assets/icons/vaccine.png"),
+                          ),
                         ),
                         SizedBox(
-                          width: 8.0,
+                          height: 6.0,
                         ),
-                        CustomCarousel(
-                          imageName: "doctor2.jpg",
-                          imageDescription: "First Image",
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        CustomCarousel(
-                          imageName: "doctor3.jpg",
-                          imageDescription: "First Image",
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        CustomCarousel(
-                          imageName: "doctor1.jpg",
-                          imageDescription: "First Image",
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        CustomCarousel(
-                          imageName: "doctor2.jpg",
-                          imageDescription: "First Image",
+                        Text(
+                          "Vaccine",
+                          style: MyStyles.paragraph,
                         ),
                       ],
                     ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 16.0, left: 16.0),
-                  child: Text(
-                    "Choose the type of events",
-                    style: MyStyles.headingFour,
-                  ),
-                ),
-                // divider
-                Container(
-                  margin: EdgeInsets.all(18.0),
-                  width: MediaQuery.of(context).size.width,
-                  height: 5.0,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                ),
-                // choose items first items
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // first item
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () =>
-                                Navigator.pushNamed(context, "/vaccine"),
-                            child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              child: Image.asset("assets/icons/vaccine.png"),
+                    // second item
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.pushNamed(context, "/doctor"),
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
+                            child: Image.asset("assets/icons/doctor.png"),
                           ),
-                          SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "Vaccine",
-                            style: MyStyles.paragraph,
-                          ),
-                        ],
-                      ),
-                      // second item
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () =>
-                                Navigator.pushNamed(context, "/doctor"),
-                            child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              child: Image.asset("assets/icons/doctor.png"),
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "Doctor",
+                          style: MyStyles.paragraph,
+                        ),
+                      ],
+                    ),
+                    // third item
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, "/lab"),
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
+                            child: Image.asset("assets/icons/labtest.png"),
                           ),
-                          SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "Doctor",
-                            style: MyStyles.paragraph,
-                          ),
-                        ],
-                      ),
-                      // third item
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () => Navigator.pushNamed(context, "/lab"),
-                            child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              child: Image.asset("assets/icons/labtest.png"),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "Lab Test",
-                            style: MyStyles.paragraph,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "Lab Test",
+                          style: MyStyles.paragraph,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                SizedBox(height: 16.0),
-                // second row for items
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // fourth item
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () =>
-                                Navigator.pushNamed(context, "/hospital"),
-                            child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              child:
-                                  Image.asset("assets/icons/hospitalbed.png"),
+              ),
+              SizedBox(height: 16.0),
+              // second row for items
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // fourth item
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.pushNamed(context, "/hospital"),
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
+                            child:
+                                Image.asset("assets/icons/hospitalbed.png"),
                           ),
-                          SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "Hospital",
-                            style: MyStyles.paragraph,
-                          ),
-                        ],
-                      ),
-                      // fifth item
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return CupertinoAlertDialog(
-                                      title: Text("Contact Us"),
-                                      content: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 8.0,
-                                          ),
-                                          // contact number
-                                          Container(
-                                            padding: EdgeInsets.all(8.0),
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text("+977 9860162323"),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    launch(Uri(
-                                                      scheme: 'tel',
-                                                      path: "9860162323",
-                                                    ).toString());
-                                                  },
-                                                  child: Container(
-                                                    child: Icon(
-                                                        CupertinoIcons.phone),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 8.0,
-                                          ),
-                                          // contact email
-                                          Container(
-                                            padding: EdgeInsets.all(8.0),
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                    "abishekkhanal2056@gmail.com"),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    launch(Uri(
-                                                      scheme: 'mailto',
-                                                      path:
-                                                          'abishekkhanal2056@gmail.com',
-                                                      query:
-                                                          encodeQueryParameters(<
-                                                              String, String>{
-                                                        'subject':
-                                                            'Contact Us Section'
-                                                      }),
-                                                    ).toString());
-                                                  },
-                                                  child: Container(
-                                                    child: Icon(
-                                                      CupertinoIcons.mail,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      actions: [
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "Hospital",
+                          style: MyStyles.paragraph,
+                        ),
+                      ],
+                    ),
+                    // fifth item
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return CupertinoAlertDialog(
+                                    title: Text("Contact Us"),
+                                    content: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        // contact number
                                         Container(
-                                          margin: EdgeInsets.all(8.0),
-                                          child: ElevatedButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                            child: Text("Close"),
+                                          padding: EdgeInsets.all(8.0),
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                            children: [
+                                              Text("+977 9860162323"),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  launch(Uri(
+                                                    scheme: 'tel',
+                                                    path: "9860162323",
+                                                  ).toString());
+                                                },
+                                                child: Container(
+                                                  child: Icon(
+                                                      CupertinoIcons.phone),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        // contact email
+                                        Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                            children: [
+                                              Text(
+                                                  "abishekkhanal2056@gmail.com"),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  launch(Uri(
+                                                    scheme: 'mailto',
+                                                    path:
+                                                        'abishekkhanal2056@gmail.com',
+                                                    query:
+                                                        encodeQueryParameters(<
+                                                            String, String>{
+                                                      'subject':
+                                                          'Contact Us Section'
+                                                    }),
+                                                  ).toString());
+                                                },
+                                                child: Container(
+                                                  child: Icon(
+                                                    CupertinoIcons.mail,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                              child: Image.asset("assets/icons/mobile.png"),
+                                    ),
+                                    actions: [
+                                      Container(
+                                        margin: EdgeInsets.all(8.0),
+                                        child: ElevatedButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text("Close"),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
+                            child: Image.asset("assets/icons/mobile.png"),
                           ),
-                          SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "Contact Us",
-                            style: MyStyles.paragraph,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 16.0, left: 16.0),
-                  child: Text(
-                    "Top Rated Doctor",
-                    style: MyStyles.headingFour,
-                  ),
-                ),
-                // divider
-                Container(
-                  margin: EdgeInsets.all(18.0),
-                  width: MediaQuery.of(context).size.width,
-                  height: 5.0,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                ),
-                // top rated doctor
-                SizedBox(
-                  height: 120,
-                  child: Container(
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        TopRatedDoctor(
-                            imageName: "doctor1.jpg",
-                            doctorName: "Abishek Khanal",
-                            doctorEmail: "abishek@gmail.com",
-                            likes: 30),
-                        TopRatedDoctor(
-                            imageName: "doctor2.jpg",
-                            doctorName: "Abishek Khanal",
-                            doctorEmail: "abishek@gmail.com",
-                            likes: 30),
-                        TopRatedDoctor(
-                            imageName: "doctor3.jpg",
-                            doctorName: "Abishek Khanal",
-                            doctorEmail: "abishek@gmail.com",
-                            likes: 30),
-                        TopRatedDoctor(
-                            imageName: "doctor1.jpg",
-                            doctorName: "Abishek Khanal",
-                            doctorEmail: "abishek@gmail.com",
-                            likes: 30),
-                        TopRatedDoctor(
-                            imageName: "doctor2.jpg",
-                            doctorName: "Abishek Khanal",
-                            doctorEmail: "abishek@gmail.com",
-                            likes: 30),
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "Contact Us",
+                          style: MyStyles.paragraph,
+                        ),
                       ],
                     ),
-                  ),
-                )
-              ],
-            ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 16.0, left: 16.0),
+                child: Text(
+                  "Top Rated Doctor",
+                  style: MyStyles.headingFour,
+                ),
+              ),
+              // divider
+              Container(
+                margin: EdgeInsets.all(18.0),
+                width: MediaQuery.of(context).size.width,
+                height: 5.0,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+              ),
+              // top rated doctor
+
+            ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class DoctorRatingScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance
+          .collection('user')
+          .limit(5)
+          .where("role", isEqualTo: "doctor")
+          .snapshots(),
+      builder: (_, snapshot) {
+        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+        if (snapshot.hasData) {
+          final docs = snapshot.data!.docs;
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (_, i) {
+              final data = docs[i].data();
+              return Container(
+                margin: EdgeInsets.all(16.0),
+                child: Container(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30.0,
+                      backgroundImage: AssetImage("assets/images/doctor1.jpg"),
+                    ),
+                    title: Text(
+                      data['fullName'],
+                    ),
+                    subtitle: Text(
+                      data['email'],
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(CupertinoIcons.arrow_right_circle),
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DoctorProfileScreen(
+                                docId: snapshot.data!.docs[i].id,
+                                fullName: data['fullName'],
+                                email: data['email'],
+                                rating: data['rating'],
+                                address: data['address'],
+                                contact: data['contact'],
+                                licensesNumber: data['licenses_number'],
+                                description: data['description'],
+                              ))),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
+
+        return Center(child: Text("Nothing to display"));
+      },
+    );
+  }
+}
+
+class CarouselHomePage extends StatelessWidget {
+  const CarouselHomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirebaseFirestore.instance.collection('carousel').snapshots(),
+      builder: (_, snapshot) {
+        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+        if (snapshot.hasData) {
+          final docs = snapshot.data!.docs;
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (_, i) {
+              final data = docs[i].data();
+              return Container(
+                margin: EdgeInsets.all(16.0),
+                child: Card(
+                  elevation: 2.0,
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: CustomCarousel(
+                      imageName: data['imageURL'],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
+
+        return Center(child: CircularProgressIndicator());
+      },
     );
   }
 }

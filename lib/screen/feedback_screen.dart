@@ -7,19 +7,39 @@ import 'package:medicalapp/widgets/custom_appbar.dart';
 // ignore: must_be_immutable
 class FeedBackScreen extends StatelessWidget {
   String docID;
-  FeedBackScreen({required this.docID});
+  double docRating;
+
+  FeedBackScreen({required this.docID, required this.docRating});
 
   @override
   Widget build(BuildContext context) {
     postFeedback(double rating) {
-      FirebaseFirestore.instance.collection("users")
-          .doc('$docID')
-          .update({'rating': '$rating'})
-          .then((value) => print("User rating Updated"))
-          .catchError((error) => print("Failed to update user: $error"));
-    }
-
-    _checkNotification(){
+      DocumentReference<Map<String, dynamic>> user =
+          FirebaseFirestore.instance.collection("user").doc(docID);
+      user
+          .update({
+            'rating': docRating + rating,
+          })
+          .then((value) => AlertDialog(
+                title: Text("Successful"),
+                content: Text("Task Completed"),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("Close"),
+                  ),
+                ],
+              ))
+          .catchError((error) => AlertDialog(
+                title: Text("Error"),
+                content: Text("Something went wrong"),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("Close"),
+                  ),
+                ],
+              ));
     }
 
     return Scaffold(
@@ -57,14 +77,6 @@ class FeedBackScreen extends StatelessWidget {
               },
             ),
           ),
-          Container(
-            child: ElevatedButton(
-              onPressed: (){
-                _checkNotification();
-              },
-              child: Text("Check Notification"),
-            ),
-          )
         ],
       ),
     );

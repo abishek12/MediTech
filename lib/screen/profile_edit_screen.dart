@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
@@ -16,6 +15,7 @@ class ProfileEditScreen extends StatelessWidget {
     String _contact = "";
     String _address = "";
     String _age = "";
+    String _password = "";
 
     return FutureBuilder<DocumentSnapshot>(
         future: users.doc(_userId).get(),
@@ -122,6 +122,48 @@ class ProfileEditScreen extends StatelessWidget {
                           Navigator.pushNamed(context, "/dashboard"),
                         },
                         child: Text("Update Profile"),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(16.0),
+                      child: TextFormField(
+                        onChanged: (value) {
+                          _password = value;
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          labelText: "Password",
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(16.0),
+                      child: MaterialButton(
+                        onPressed: () => {
+                          if (_password == "")
+                            {
+                              AlertDialog(
+                                title: Text("Error"),
+                                content: Text("Password is required"),
+                              )
+                            }
+                          else
+                            {
+                              users.doc(_userId).update({
+                                "password": _password,
+                              }),
+                              Navigator.pushNamed(context, "/dashboard"),
+                            }
+                        },
+                        child: Text(
+                          "Change Password",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        color: Colors.blueAccent,
                       ),
                     ),
                   ],

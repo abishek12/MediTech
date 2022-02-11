@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
+import 'package:medicalapp/screen/doctor_profile_edit_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 
 // ignore: must_be_immutable
@@ -39,7 +40,14 @@ class DoctorDashboardScreen extends StatelessWidget {
             return Scaffold(
               appBar: myAppBar("Dashboard"),
               floatingActionButton: FloatingActionButton(
-                onPressed: () {},
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DoctorProfileEditScreen(
+                            docID: _userId,
+                            docName: data["fullName"],
+                            docSpecification: data["specification"],
+                            docDescription: data["description"]))),
                 child: Icon(
                   CupertinoIcons.pen,
                 ),
@@ -74,12 +82,15 @@ class DoctorDashboardScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Column(
+                              Row(
                                 children: [
                                   Text("Rating"),
+                                  SizedBox(
+                                    width: 8.0,
+                                  ),
                                   Text(data["rating"] == 0
                                       ? "0"
-                                      : data["rating"]),
+                                      : data["rating"].toString()),
                                 ],
                               ),
                             ],
@@ -118,6 +129,26 @@ class DoctorDashboardScreen extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: Wrap(
+                        children: [
+                          Card(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              child: Text(
+                                data['description'],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    GetUerAppointment(FirebaseAuth.instance.currentUser!.uid)
                   ],
                 ),
               ),
@@ -130,5 +161,67 @@ class DoctorDashboardScreen extends StatelessWidget {
             ),
           );
         });
+  }
+}
+
+class GetUerAppointment extends StatelessWidget {
+  final String documentId;
+
+  GetUerAppointment(this.documentId);
+
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('bookAppointmentDoctor');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Card(
+              child: Text("Nothing TO Display"),
+            ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
+              color: Colors.white,
+            ),
+            child: ListTile(
+              title: Text(
+                "User ID: ${data["uId"]}",
+                style: MyStyles.paragraph,
+              ),
+            ),
+          );
+        }
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Card(
+            child: Text("Nothing TO Display"),
+          ),
+        );
+      },
+    );
   }
 }
