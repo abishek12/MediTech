@@ -30,14 +30,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^1.7.0
   firebase_auth: ^3.1.2
-  cloud_firestore: ^2.5.3
-  geolocator: ^7.7.1
+  cloud_firestore: ^3.1.10
+  geolocator: ^8.2.0
   double_back_to_close_app: ^2.0.1
   flutter_rating_bar: ^4.0.0
   select_form_field: ^2.2.0
   image_picker: ^0.8.4+4
   firebase_storage: ^10.1.0
-  khalti_flutter: ^1.0.1
+  khalti_flutter: ^2.0.2
   url_launcher: ^6.0.15
   mailer: ^5.0.2
   flutter_local_notifications: ^9.1.4

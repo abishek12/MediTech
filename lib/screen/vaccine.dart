@@ -13,15 +13,17 @@ class VaccineScreen extends StatefulWidget {
 class _VaccineScreenState extends State<VaccineScreen> {
   @override
   Widget build(BuildContext context) {
-    String lat = "";
-    String long = "";
+    var lat;
+    var long;
 
     getCurrentUserLocation() async {
       final geoPosition = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       setState(() {
-        lat = "${geoPosition.latitude}";
-        long = "${geoPosition.longitude}";
+        lat = geoPosition.latitude;
+        long = geoPosition.longitude;
+        print(lat);
+        print(long);
       });
       Navigator.push(
           context,

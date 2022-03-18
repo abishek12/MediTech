@@ -2,14 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:medicalapp/screen/vaccine_book.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
 // ignore: must_be_immutable
 class NearByScreen extends StatefulWidget {
-  String latitude = "";
-  String longitude = "";
+  double latitude;
+  double longitude;
 
   NearByScreen({required this.latitude, required this.longitude});
 
@@ -23,8 +24,6 @@ class _NearByScreenState extends State<NearByScreen> {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
           .collection('vaccine')
-          .where("location",
-              isNotEqualTo: "${widget.latitude} ${widget.longitude}")
           .snapshots(),
       builder: (_, snapshot) {
         if (snapshot.hasError) return Text('Error = ${snapshot.error}');
@@ -38,31 +37,41 @@ class _NearByScreenState extends State<NearByScreen> {
                 itemCount: docs.length,
                 itemBuilder: (_, i) {
                   final data = docs[i].data();
-                  return Container(
-                    margin: EdgeInsets.all(16.0),
-                    child: Card(
-                      child: ListTile(
-                        leading: Image.asset("assets/icons/vaccine.png"),
-                        title: Text(data['name']),
-                        subtitle: Text("Dose: ${data['dose']}"),
-                        trailing: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VaccineBook(
-                                          docId: snapshot.data!.docs[i].id,
-                                          vName: data['name'],
-                                          vContact: data['contact'],
-                                          vDose: data['dose'],
-                                          patientName: "Abishek Khanal",
-                                        )));
-                          },
-                          icon: Icon(CupertinoIcons.arrow_right_circle),
+                  final long = data['long'];
+                  final lat = data['lat'];
+                  double distanceInMeters = Geolocator.distanceBetween(
+                      widget.latitude.toDouble(),
+                      widget.longitude.toDouble(),
+                      lat,
+                      long);
+                  if (distanceInMeters <= 800) {
+                    return Container(
+                      margin: EdgeInsets.all(16.0),
+                      child: Card(
+                        child: ListTile(
+                          leading: Image.asset("assets/icons/vaccine.png"),
+                          title: Text(data['name']),
+                          subtitle: Text("Dose: ${data['dose']}"),
+                          trailing: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VaccineBook(
+                                            docId: snapshot.data!.docs[i].id,
+                                            vName: data['name'],
+                                            vContact: data['contact'],
+                                            vDose: data['dose'],
+                                            patientName: "Abishek Khanal",
+                                          )));
+                            },
+                            icon: Icon(CupertinoIcons.arrow_right_circle),
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  }
+                  return Text("");
                 },
               ),
             ),
