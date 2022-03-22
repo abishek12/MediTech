@@ -51,7 +51,7 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 200,
+                      height: 250,
                       color: Colors.red,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,6 +61,10 @@ class DashboardScreen extends StatelessWidget {
                           ),
                           Text(
                             "Fullname: ${data['fullName']}",
+                            style: MyStyles.headingFour,
+                          ),
+                          Text(
+                            "Uid: " + FirebaseAuth.instance.currentUser!.uid,
                             style: MyStyles.headingFour,
                           ),
                           SizedBox(
@@ -209,10 +213,10 @@ class GetUerBed extends StatelessWidget {
                 style: MyStyles.paragraph,
               ),
               trailing: IconButton(
-                  onPressed: () {
-                    _deleteBeds(
-                        FirebaseAuth.instance.currentUser!.uid.toString());
-                  },
+                onPressed: () {
+                  _deleteBeds(
+                      FirebaseAuth.instance.currentUser!.uid.toString());
+                },
                 icon: Icon(CupertinoIcons.delete),
               ),
             ),
@@ -332,20 +336,20 @@ class GetUerVaccine extends StatelessWidget {
       future: users.doc(documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasData && !snapshot.data!.exists) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 16.0),
-                padding: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Card(
-                  child: Text("Nothing to Display"),
-                ),
-              );
-            }
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: Card(
+              child: Text("Nothing to Display"),
+            ),
+          );
+        }
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;

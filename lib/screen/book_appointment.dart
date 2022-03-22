@@ -55,7 +55,9 @@ class _BookAppointmentState extends State<BookAppointment> {
         } else {
           CollectionReference _bookAppointmentDoctor =
               FirebaseFirestore.instance.collection('bookAppointment');
-          _bookAppointmentDoctor.doc(widget.docId).set({
+          _bookAppointmentDoctor
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .set({
             'uId': FirebaseAuth.instance.currentUser!.uid,
             'doctor_id': widget.docId,
             'doctor_name': widget.doctorName,
