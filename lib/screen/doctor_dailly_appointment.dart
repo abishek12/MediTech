@@ -9,18 +9,23 @@ class TodaysAppointment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.now();
+    String date = "${dateTime.year}/${dateTime.month}/${dateTime.day}";
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
           .collection('bookAppointment')
           .where("doctor_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where('booked_date', isEqualTo: date)
           .snapshots(),
       builder: (_, snapshot) {
-        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+        if (snapshot.hasError)
+          return Text(
+            'Error = ${snapshot.error}',
+          );
         if (snapshot.hasData) {
           final docs = snapshot.data!.docs;
           return Scaffold(
             appBar: myAppBar("Doctor"),
-            drawer: MyDrawer(),
             body: ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (_, i) {
@@ -32,16 +37,11 @@ class TodaysAppointment extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.all(8.0),
                       child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 30.0,
-                          backgroundImage:
-                              AssetImage("assets/images/doctor1.jpg"),
-                        ),
                         title: Text(
                           data['uId'],
                         ),
                         subtitle: Text(
-                          data['booked_time'],
+                          "Time: " + data['booked_time'],
                         ),
                       ),
                     ),
