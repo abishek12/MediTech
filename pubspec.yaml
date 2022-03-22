@@ -43,7 +43,6 @@ dependencies:
   flutter_local_notifications: ^9.1.4
   telephony: ^0.1.4
   lottie: ^1.2.1
-  animated_splash_screen: ^1.1.0
 
 dev_dependencies:
   flutter_test:

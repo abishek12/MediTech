@@ -53,49 +53,34 @@ class _BookAppointmentState extends State<BookAppointment> {
                 );
               });
         } else {
-          CollectionReference _bookAppointment =
-              FirebaseFirestore.instance.collection('bookAppointment');
           CollectionReference _bookAppointmentDoctor =
-              FirebaseFirestore.instance.collection('bookAppointmentDoctor');
-          _bookAppointmentDoctor
-              .doc(widget.docId)
-              .set({
-                'uId': FirebaseAuth.instance.currentUser!.uid,
-                'booked_date':
-                    "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
-                'booked_time': widget.times,
-              })
-              .then((value) => {
-                    _bookAppointment
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .set({
-                      'doctor_id': widget.docId,
-                      'doctor_name': widget.doctorName,
-                      'doctor_contact': widget.doctorContact,
-                      'address': widget.doctorAddress,
-                      'booked_date':
-                          "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
-                      'booked_time': widget.times,
-                    })
-                  })
-              .then((value) {
-                return showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (c) {
-                      return AlertDialog(
-                        title: Text("Success"),
-                        content: Text("Your Appointment has been booked"),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text("Done"),
-                          ),
-                        ],
-                      );
-                    });
-              })
-              .catchError((error) => print("Failed to add user: $error"));
+              FirebaseFirestore.instance.collection('bookAppointment');
+          _bookAppointmentDoctor.doc(widget.docId).set({
+            'uId': FirebaseAuth.instance.currentUser!.uid,
+            'doctor_id': widget.docId,
+            'doctor_name': widget.doctorName,
+            'doctor_contact': widget.doctorContact,
+            'address': widget.doctorAddress,
+            'booked_date':
+                "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
+            'booked_time': widget.times,
+          }).then((value) {
+            return showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (c) {
+                  return AlertDialog(
+                    title: Text("Success"),
+                    content: Text("Your Appointment has been booked"),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Done"),
+                      ),
+                    ],
+                  );
+                });
+          }).catchError((error) => print("Failed to add user: $error"));
         }
       });
     }

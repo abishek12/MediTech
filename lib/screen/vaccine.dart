@@ -11,26 +11,29 @@ class VaccineScreen extends StatefulWidget {
 }
 
 class _VaccineScreenState extends State<VaccineScreen> {
+  var lat;
+  var long;
+
+  getCurrentUserLocation() async {
+
+    final geoPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      lat = geoPosition.latitude;
+      long = geoPosition.longitude;
+      print(lat);
+      print(long);
+    });
+
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                NearByScreen(latitude: lat, longitude: long)));
+  }
   @override
   Widget build(BuildContext context) {
-    var lat;
-    var long;
 
-    getCurrentUserLocation() async {
-      final geoPosition = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      setState(() {
-        lat = geoPosition.latitude;
-        long = geoPosition.longitude;
-        print(lat);
-        print(long);
-      });
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  NearByScreen(latitude: lat, longitude: long)));
-    }
 
     return Scaffold(
       appBar: myAppBar("Vaccine"),
@@ -40,13 +43,12 @@ class _VaccineScreenState extends State<VaccineScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.all(16.0),
               padding: EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  getCurrentUserLocation();
-                },
+              child: MaterialButton(
+                minWidth: double.infinity,
+                color: Colors.blueAccent,
+                onPressed: () => getCurrentUserLocation(),
                 child: Text("Near By"),
               ),
             ),

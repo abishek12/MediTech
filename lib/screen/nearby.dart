@@ -9,10 +9,10 @@ import 'package:medicalapp/widgets/custom_drawer.dart';
 
 // ignore: must_be_immutable
 class NearByScreen extends StatefulWidget {
-  double latitude;
-  double longitude;
+  double? latitude;
+  double? longitude;
 
-  NearByScreen({required this.latitude, required this.longitude});
+  NearByScreen({this.latitude, this.longitude});
 
   @override
   State<NearByScreen> createState() => _NearByScreenState();
@@ -40,11 +40,11 @@ class _NearByScreenState extends State<NearByScreen> {
                   final long = data['long'];
                   final lat = data['lat'];
                   double distanceInMeters = Geolocator.distanceBetween(
-                      widget.latitude.toDouble(),
-                      widget.longitude.toDouble(),
+                      widget.latitude!.toDouble(),
+                      widget.longitude!.toDouble(),
                       lat,
                       long);
-                  if (distanceInMeters <= 800) {
+                  if (distanceInMeters <= 5000) {
                     return Container(
                       margin: EdgeInsets.all(16.0),
                       child: Card(

@@ -7,7 +7,7 @@ import 'package:medicalapp/widgets/custom_appbar.dart';
 // ignore: must_be_immutable
 class FeedBackScreen extends StatelessWidget {
   String docID;
-  double docRating;
+  var docRating;
 
   FeedBackScreen({required this.docID, required this.docRating});
 

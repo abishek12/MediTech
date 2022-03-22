@@ -5,11 +5,12 @@ import 'package:medicalapp/screen/feedback_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_drawer.dart';
 
+// ignore: must_be_immutable
 class DoctorProfileScreen extends StatefulWidget {
   final String docId;
   final String fullName;
   final String email;
-  final double rating;
+  var rating;
   final String address;
   final String contact;
   final String licensesNumber;
@@ -89,9 +90,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         SizedBox(
                           width: 16.0,
                         ),
-                        Text(widget.rating == 0
-                            ? "0.0"
-                            : "${widget.rating}"),
+                        Text(widget.rating == 0 ? "0.0" : "${widget.rating}"),
                       ],
                     ),
                   ],

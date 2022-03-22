@@ -7,6 +7,7 @@ import 'package:medicalapp/constants/routes.dart';
 import 'package:medicalapp/screen/appointment.dart';
 import 'package:medicalapp/screen/beds.dart';
 import 'package:medicalapp/screen/dashboard_screen.dart';
+import 'package:medicalapp/screen/doctor_dailly_appointment.dart';
 import 'package:medicalapp/screen/doctor_dashboard_screen.dart';
 import 'package:medicalapp/screen/doctors_screen.dart';
 import 'package:medicalapp/screen/home_screen.dart';
@@ -80,6 +81,7 @@ class _MyAppState extends State<MyApp> {
                 MyRoutes.hospitalScreen: (context) => HospitalScreen(),
                 MyRoutes.appointmentScreen: (context) => AppointmentScreen(),
                 MyRoutes.searchScreen: (context) => Search(),
+                MyRoutes.todaysAppointment: (context) => TodaysAppointment(),
               });
         });
   }

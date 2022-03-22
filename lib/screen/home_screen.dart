@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/constants/styles.dart';
 import 'package:medicalapp/screen/chatrooms.dart';
+import 'package:medicalapp/screen/doctor_dailly_appointment.dart';
 import 'package:medicalapp/screen/login_screen.dart';
 import 'package:medicalapp/widgets/custom_appbar.dart';
 import 'package:medicalapp/widgets/custom_carousel.dart';
@@ -105,6 +106,22 @@ class DoctorHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                //chat
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TodaysAppointment())),
+                  child: Container(
+                    margin: EdgeInsets.all(16.0),
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(CupertinoIcons.chat_bubble_2),
+                        title: Text("Today's Appointment"),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -170,8 +187,7 @@ class PatientHomeScreen extends StatelessWidget {
                     Column(
                       children: [
                         GestureDetector(
-                          onTap: () =>
-                              Navigator.pushNamed(context, "/vaccine"),
+                          onTap: () => Navigator.pushNamed(context, "/vaccine"),
                           child: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
@@ -194,8 +210,7 @@ class PatientHomeScreen extends StatelessWidget {
                     Column(
                       children: [
                         GestureDetector(
-                          onTap: () =>
-                              Navigator.pushNamed(context, "/doctor"),
+                          onTap: () => Navigator.pushNamed(context, "/doctor"),
                           child: Container(
                             padding: EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
@@ -258,8 +273,7 @@ class PatientHomeScreen extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(40.0),
                             ),
-                            child:
-                                Image.asset("assets/icons/hospitalbed.png"),
+                            child: Image.asset("assets/icons/hospitalbed.png"),
                           ),
                         ),
                         SizedBox(
@@ -290,16 +304,14 @@ class PatientHomeScreen extends StatelessWidget {
                                         // contact number
                                         Container(
                                           padding: EdgeInsets.all(8.0),
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                           ),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text("+977 9860162323"),
                                               GestureDetector(
@@ -323,16 +335,14 @@ class PatientHomeScreen extends StatelessWidget {
                                         // contact email
                                         Container(
                                           padding: EdgeInsets.all(8.0),
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                           ),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                   "abishekkhanal2056@gmail.com"),
@@ -413,7 +423,6 @@ class PatientHomeScreen extends StatelessWidget {
                 ),
               ),
               // top rated doctor
-
             ],
           ),
         ),
@@ -458,15 +467,15 @@ class DoctorRatingScreen extends StatelessWidget {
                       onPressed: () =>
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => DoctorProfileScreen(
-                                docId: snapshot.data!.docs[i].id,
-                                fullName: data['fullName'],
-                                email: data['email'],
-                                rating: data['rating'],
-                                address: data['address'],
-                                contact: data['contact'],
-                                licensesNumber: data['licenses_number'],
-                                description: data['description'],
-                              ))),
+                                    docId: snapshot.data!.docs[i].id,
+                                    fullName: data['fullName'],
+                                    email: data['email'],
+                                    rating: data['rating'],
+                                    address: data['address'],
+                                    contact: data['contact'],
+                                    licensesNumber: data['licenses_number'],
+                                    description: data['description'],
+                                  ))),
                     ),
                   ),
                 ),

@@ -35,6 +35,8 @@ class VaccineBook extends StatefulWidget {
 class _VaccineBookState extends State<VaccineBook> {
   DateTime? _dateTime;
   TextEditingController _patientContact = new TextEditingController();
+  TextEditingController _patientName = new TextEditingController();
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +70,12 @@ class _VaccineBookState extends State<VaccineBook> {
           CollectionReference _bookVaccine =
               FirebaseFirestore.instance.collection('bookVaccine');
           _bookVaccine.doc(FirebaseAuth.instance.currentUser!.uid).set({
+            'uId': FirebaseAuth.instance.currentUser!.uid,
             'vaccine_name': widget.vName,
             'vaccine_dose': widget.vDose,
             'vaccine_contact': widget.vContact,
-            'patient_name': widget.patientName,
             'contact': _patientContact.text,
+            'name': _patientName.text,
             'booked_date':
                 "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
             'booked_time': widget.times,
@@ -126,147 +129,158 @@ class _VaccineBookState extends State<VaccineBook> {
     ];
 
     return Scaffold(
-      appBar: myAppBar("Book a Vaccine"),
-      drawer: MyDrawer(),
-      body: ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 32.0),
-            alignment: Alignment.center,
-            child: Text(
-              "Vaccine Center",
-              style: MyStyles.heading,
-            ),
-          ),
-          //vaccine name
-          Container(
-            margin: EdgeInsets.all(16.0),
-            child: TextFormField(
-              initialValue: "${widget.vName}",
-              onChanged: (value) {
-                widget.vName = value;
-              },
-              decoration: InputDecoration(
-                labelText: "vaccine Name",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          //  vaccine dose
-          Container(
-            margin: EdgeInsets.all(16.0),
-            child: TextFormField(
-              onChanged: (value) {
-                widget.vDose = value;
-              },
-              initialValue: "${widget.vDose}",
-              decoration: InputDecoration(
-                labelText: "vaccine Dose",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          //  total vaccine
-          Container(
-            margin: EdgeInsets.all(16.0),
-            child: TextFormField(
-              onChanged: (value) {
-                widget.vContact = value;
-              },
-              initialValue: "${widget.vContact}",
-              decoration: InputDecoration(
-                labelText: "vaccine Contact",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          //  patient name
-          Container(
-            margin: EdgeInsets.all(16.0),
-            child: TextFormField(
-              onChanged: (value) {
-                widget.patientName = value;
-              },
-              initialValue: "${widget.patientName}",
-              decoration: InputDecoration(
-                labelText: "Patient Name",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          // patient contact
-          Container(
-            margin: EdgeInsets.all(16.0),
-            child: TextFormField(
-              controller: _patientContact,
-              decoration: InputDecoration(
-                labelText: "Contact",
-                hintText: "Contact",
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          // date and time picked
-          Container(
-            margin: EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _dateTime == null
-                      ? "Select a date"
-                      : "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
+        appBar: myAppBar("Book a Vaccine"),
+        drawer: MyDrawer(),
+        body: Form(
+          key: globalKey,
+          child: ListView(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 32.0),
+                alignment: Alignment.center,
+                child: Text(
+                  "Vaccine Center",
+                  style: MyStyles.heading,
                 ),
-                IconButton(
-                  icon: Icon(
-                    CupertinoIcons.clock_fill,
-                    color: Colors.blueAccent,
-                    size: 30.0,
+              ),
+              //vaccine name
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: TextFormField(
+                  initialValue: "${widget.vName}",
+                  onChanged: (value) {
+                    widget.vName = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "vaccine Name",
+                    border: OutlineInputBorder(),
                   ),
-                  onPressed: () {
-                    showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2017, 1),
-                      lastDate: DateTime(2022, 7),
-                      helpText: 'Select a date',
-                    ).then((value) {
-                      setState(() {
-                        _dateTime = value!;
-                      });
-                    });
+                ),
+              ),
+              //  vaccine dose
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: TextFormField(
+                  onChanged: (value) {
+                    widget.vDose = value;
+                  },
+                  initialValue: "${widget.vDose}",
+                  decoration: InputDecoration(
+                    labelText: "vaccine Dose",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              //  total vaccine
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: TextFormField(
+                  onChanged: (value) {
+                    widget.vContact = value;
+                  },
+                  initialValue: "${widget.vContact}",
+                  decoration: InputDecoration(
+                    labelText: "vaccine Contact",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              //  patient name
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: _patientName,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Name is required";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Patient Name",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              // patient contact
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: _patientContact,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Contact is required";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Contact",
+                    hintText: "Contact",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              // date and time picked
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      _dateTime == null
+                          ? "Select a date"
+                          : "${_dateTime!.year}/${_dateTime!.month}/${_dateTime!.day}",
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        CupertinoIcons.clock_fill,
+                        color: Colors.blueAccent,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2017, 1),
+                          lastDate: DateTime(2022, 7),
+                          helpText: 'Select a date',
+                        ).then((value) {
+                          setState(() {
+                            _dateTime = value!;
+                          });
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(16.0),
+                child: SelectFormField(
+                  type: SelectFormFieldType.dropdown,
+                  // or can be dialog
+                  labelText: 'Time',
+                  items: _timetable,
+                  onChanged: (val) {
+                    widget.times = val.toString();
+                  },
+                  onSaved: (val) {
+                    widget.times = val.toString();
                   },
                 ),
-              ],
-            ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _bookVaccine();
+                  },
+                  child: Text("Vaccinate"),
+                ),
+              ),
+            ],
           ),
-          Container(
-            margin: EdgeInsets.all(16.0),
-            child: SelectFormField(
-              type: SelectFormFieldType.dropdown,
-              // or can be dialog
-              labelText: 'Time',
-              items: _timetable,
-              onChanged: (val) {
-                widget.times = val.toString();
-              },
-              onSaved: (val) {
-                widget.times = val.toString();
-              },
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                _bookVaccine();
-              },
-              child: Text("Vaccinate"),
-            ),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
