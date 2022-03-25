@@ -405,24 +405,6 @@ class PatientHomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 16.0, left: 16.0),
-                child: Text(
-                  "Top Rated Doctor",
-                  style: MyStyles.headingFour,
-                ),
-              ),
-              // divider
-              Container(
-                margin: EdgeInsets.all(18.0),
-                width: MediaQuery.of(context).size.width,
-                height: 5.0,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-              ),
-              // top rated doctor
             ],
           ),
         ),
@@ -437,7 +419,7 @@ class DoctorRatingScreen extends StatelessWidget {
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
           .collection('user')
-          .limit(5)
+          .limit(3)
           .where("role", isEqualTo: "doctor")
           .snapshots(),
       builder: (_, snapshot) {

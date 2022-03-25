@@ -30,7 +30,8 @@ class AppointmentScreen extends StatelessWidget {
                 color: Colors.white54,
                 borderRadius: BorderRadius.circular(12.0),
                 border: Border.all(color: Colors.white30)),
-            child: Text("Time: ${dt.hour}-${dt.minute}-${dt.second} | Date: ${dt.day}/${dt.month}/${dt.year}"),
+            child: Text(
+                "Time: ${dt.hour}-${dt.minute}-${dt.second} | Date: ${dt.day}/${dt.month}/${dt.year}"),
           ),
           Container(
             margin: EdgeInsets.all(16.0),
@@ -186,7 +187,9 @@ class AppointmentScreen extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(child: DoctorRatingScreen())
+          Expanded(
+            child: DoctorRatingScreen(),
+          )
         ],
       ),
     );
